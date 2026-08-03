@@ -87,7 +87,7 @@ input,select,textarea{font-family:inherit;}
 .sync-note{font-size:10.5px;color:rgba(255,255,255,.45);text-align:center;font-family:'Inter',monospace;}
 
 /* ============ MAIN ============ */
-main{flex:1;padding:30px 34px 60px;max-width:1180px;}
+main{flex:1;min-width:0;padding:30px 34px 60px;max-width:1180px;}
 .topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:20px;}
 .topbar h1{font-size:21px;font-weight:700;color:var(--ink);}
 .topbar .crumb{font-size:12px;color:var(--muted);margin-top:3px;}
@@ -146,12 +146,12 @@ main{flex:1;padding:30px 34px 60px;max-width:1180px;}
   background:var(--white);border-radius:20px;box-shadow:var(--shadow);border:1px solid var(--line-soft);
   padding:22px 22px 10px;
 }
-.cal-dow{display:grid;grid-template-columns:repeat(7,1fr);gap:0;margin-bottom:6px;}
+.cal-dow{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:0;margin-bottom:6px;}
 .cal-dow div{text-align:center;font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--muted);
   text-transform:uppercase;padding:8px 0;}
-.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;padding-bottom:14px;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;padding-bottom:14px;}
 .cal-cell{
-  min-height:96px;border-radius:13px;border:1px solid var(--line-soft);padding:9px 9px 8px;
+  min-height:96px;min-width:0;overflow:hidden;border-radius:13px;border:1px solid var(--line-soft);padding:9px 9px 8px;
   display:flex;flex-direction:column;gap:6px;background:var(--canvas-2);cursor:pointer;
 }
 .cal-cell:hover{border-color:var(--accent);background:var(--accent-soft);}
@@ -159,11 +159,12 @@ main{flex:1;padding:30px 34px 60px;max-width:1180px;}
 .cal-cell.pad{opacity:.42;}
 .cal-cell .daynum{font-family:'Poppins',sans-serif;font-weight:700;font-size:13px;color:var(--ink);}
 .cal-cell.today .daynum{color:var(--accent-dark);}
-.cal-badges{display:flex;flex-direction:column;gap:4px;}
+.cal-badges{display:flex;flex-direction:column;gap:4px;min-width:0;}
 .cal-badge{
-  font-size:10.5px;font-weight:600;padding:3px 7px;border-radius:6px;color:#fff;
+  font-size:10.5px;font-weight:600;padding:3px 7px;border-radius:6px;color:#fff;min-width:0;
   overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:flex;align-items:center;gap:5px;
 }
+.cal-badge > *{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;}
 .cal-more{font-size:10px;color:var(--muted);font-weight:600;padding-left:2px;}
 
 @media (max-width:920px){

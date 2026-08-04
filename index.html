@@ -121,7 +121,7 @@ main{flex:1;min-width:0;padding:30px 34px 60px;max-width:1180px;}
 }
 .ticker-track{flex:1;overflow:hidden;white-space:nowrap;position:relative;height:32px;}
 .ticker-track .ticker-content{
-  display:inline-block;padding-left:100%;animation:ticker-scroll 26s linear infinite;
+  display:inline-block;padding-left:100%;animation:ticker-scroll 45s linear infinite;
   line-height:32px;font-size:12.5px;font-weight:600;color:#B23A4E;
 }
 .ticker-track .ticker-content span{margin-right:42px;}
@@ -154,6 +154,33 @@ main{flex:1;min-width:0;padding:30px 34px 60px;max-width:1180px;}
   min-height:96px;min-width:0;overflow:hidden;border-radius:13px;border:1px solid var(--line-soft);padding:9px 9px 8px;
   display:flex;flex-direction:column;gap:6px;background:var(--canvas-2);cursor:pointer;
 }
+
+.view-toggle{display:flex;gap:4px;background:var(--canvas-2);border:1px solid var(--line-soft);border-radius:10px;padding:3px;}
+.vt-btn{
+  border:none;background:transparent;padding:7px 12px;border-radius:8px;font-size:12.5px;font-weight:600;
+  color:var(--muted);cursor:pointer;white-space:nowrap;
+}
+.vt-btn:hover{color:var(--ink);}
+.vt-btn.active{background:#fff;color:var(--accent-dark);box-shadow:0 1px 3px rgba(15,23,42,.12);}
+
+.agenda-card{background:var(--white);border-radius:20px;box-shadow:var(--shadow);border:1px solid var(--line-soft);padding:18px 20px;max-height:calc(100vh - 260px);overflow-y:auto;}
+.agenda-day{border-bottom:1px solid var(--line-soft);padding:14px 0;}
+.agenda-day:first-child{padding-top:2px;}
+.agenda-day:last-child{border-bottom:none;}
+.agenda-day-head{display:flex;align-items:baseline;gap:8px;margin-bottom:10px;}
+.agenda-day-head .d{font-family:'Poppins',sans-serif;font-weight:700;font-size:14px;color:var(--ink);}
+.agenda-day-head .d.today{color:var(--accent-dark);}
+.agenda-day-head .cnt{font-size:11.5px;color:var(--muted);background:var(--canvas-2);padding:2px 8px;border-radius:10px;}
+.agenda-task{
+  display:flex;align-items:flex-start;gap:10px;padding:9px 10px;border-radius:10px;cursor:pointer;
+}
+.agenda-task:hover{background:var(--canvas-2);}
+.agenda-task .dot{width:9px;height:9px;border-radius:50%;margin-top:5px;flex:none;}
+.agenda-task .body{flex:1;min-width:0;}
+.agenda-task .title{font-size:13.5px;font-weight:600;color:var(--ink);white-space:normal;word-break:break-word;line-height:1.4;}
+.agenda-task .meta{font-size:11.5px;color:var(--muted);margin-top:2px;display:flex;gap:8px;flex-wrap:wrap;}
+.agenda-task .meta .prio-tinggi{color:#E0546B;font-weight:600;}
+.agenda-empty{padding:40px 10px;text-align:center;color:var(--muted);font-size:13px;}
 .cal-cell:hover{border-color:var(--accent);background:var(--accent-soft);}
 .cal-cell.today{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset;}
 .cal-cell.pad{opacity:.42;}
@@ -317,6 +344,10 @@ main{flex:1;min-width:0;padding:30px 34px 60px;max-width:1180px;}
         <div class="crumb">Klik salah satu tanggal untuk lihat / tambah tugas hari itu</div>
       </div>
       <div class="top-actions">
+        <div class="view-toggle" id="viewToggle">
+          <button class="vt-btn active" id="btnViewCalendar" type="button">🗓️ Kalender</button>
+          <button class="vt-btn" id="btnViewList" type="button">📋 List Harian</button>
+        </div>
         <div class="search-box">🔍<input id="searchInput" type="text" placeholder="Cari tugas..."></div>
         <button class="btn btn-primary" id="btnAddToday">＋ Tambah Tugas</button>
       </div>
@@ -333,11 +364,16 @@ main{flex:1;min-width:0;padding:30px 34px 60px;max-width:1180px;}
       <div class="count-chip" id="nodateCount">0</div>
     </div>
 
-    <div class="cal-card">
+    <div class="cal-card" id="calCard">
       <div class="cal-dow">
         <div>Min</div><div>Sen</div><div>Sel</div><div>Rab</div><div>Kam</div><div>Jum</div><div>Sab</div>
       </div>
       <div class="cal-grid" id="calGrid"></div>
+    </div>
+
+    <div class="agenda-card" id="agendaCard" style="display:none;">
+      <div id="agendaList"></div>
+      <div class="agenda-empty" id="agendaEmpty" style="display:none;">Tidak ada tugas berdeadline di bulan ini yang cocok dengan filter.</div>
     </div>
   </main>
 </div>
@@ -649,7 +685,7 @@ function renderKategoriManageList(){
       saveKategoriList();
       renderKategoriManageList();
       renderKategoriFilters();
-      renderCalendar(); renderNodateCard();
+      renderCalendar(); renderNodateCard(); if (viewMode==='list') renderAgenda();
       toast('Kategori dihapus');
     };
   });
@@ -665,7 +701,7 @@ document.getElementById('btnAddKategori').onclick = ()=>{
   input.value = '';
   renderKategoriManageList();
   renderKategoriFilters();
-  renderCalendar(); renderNodateCard();
+  renderCalendar(); renderNodateCard(); if (viewMode==='list') renderAgenda();
   toast('Kategori ditambahkan');
 };
 
@@ -679,7 +715,7 @@ function renderKategoriFilters(){
     btn.onclick = ()=>{
       const k = btn.dataset.kategori;
       if (activeKategori.has(k)) activeKategori.delete(k); else activeKategori.add(k);
-      renderKategoriFilters(); renderCalendar(); renderNodateCard();
+      renderKategoriFilters(); renderCalendar(); renderNodateCard(); if (viewMode==='list') renderAgenda();
     };
   });
 }
@@ -694,7 +730,7 @@ function renderPrioritasFilters(){
     btn.onclick = ()=>{
       const p = btn.dataset.prioritas;
       if (activePrioritas.has(p)) activePrioritas.delete(p); else activePrioritas.add(p);
-      renderPrioritasFilters(); renderCalendar(); renderNodateCard();
+      renderPrioritasFilters(); renderCalendar(); renderNodateCard(); if (viewMode==='list') renderAgenda();
     };
   });
 }
@@ -737,6 +773,80 @@ function renderNodateCard(){
   const n = tasksWithoutDate().length;
   document.getElementById('nodateCount').textContent = n;
 }
+
+/* ============ AGENDA / LIST VIEW (tampilan tugas harian tanpa teks terpotong) ============ */
+let viewMode = 'calendar'; // 'calendar' | 'list'
+
+function renderAgenda(){
+  const wrap = document.getElementById('agendaList');
+  const emptyEl = document.getElementById('agendaEmpty');
+  const todayStr = todayISO();
+  const daysInMonth = new Date(viewYear, viewMonth+1, 0).getDate();
+
+  const dayBlocks = [];
+  for (let d=1; d<=daysInMonth; d++){
+    const dateStr = fmtISO(new Date(viewYear, viewMonth, d));
+    const items = tasksForDate(dateStr)
+      .slice()
+      .sort((a,b)=> (a.status==='Selesai') - (b.status==='Selesai') || (b.prioritas==='Tinggi') - (a.prioritas==='Tinggi'));
+    if (items.length) dayBlocks.push({ dateStr, d, items });
+  }
+
+  if (!dayBlocks.length){
+    wrap.innerHTML = '';
+    emptyEl.style.display = 'block';
+    return;
+  }
+  emptyEl.style.display = 'none';
+
+  wrap.innerHTML = dayBlocks.map(block=>{
+    const dt = parseISO(block.dateStr);
+    const isToday = block.dateStr === todayStr;
+    const headLabel = HARI[dt.getDay()] + ', ' + block.d + ' ' + BULAN[viewMonth] + (isToday ? ' — Hari ini' : '');
+    const rows = block.items.map(t=>{
+      const isOverdue = t.deadline < todayStr && t.status !== 'Selesai';
+      return `
+        <div class="agenda-task" data-id="${esc(t.id)}" data-date="${esc(block.dateStr)}">
+          <div class="dot" style="background:${STATUS_COLOR[t.status]||'#94A3B8'}"></div>
+          <div class="body">
+            <div class="title">${t.prioritas==='Tinggi'?'🔺 ':''}${esc(t.tugas)}</div>
+            <div class="meta">
+              <span>${esc(t.kategori||'Lainnya')}</span>
+              <span>${esc(t.status)}</span>
+              ${t.prioritas==='Tinggi'?'<span class="prio-tinggi">Prioritas Tinggi</span>':''}
+              ${isOverdue?'<span class="prio-tinggi">Terlambat</span>':''}
+            </div>
+          </div>
+        </div>`;
+    }).join('');
+    return `
+      <div class="agenda-day">
+        <div class="agenda-day-head">
+          <div class="d ${isToday?'today':''}">${esc(headLabel)}</div>
+          <div class="cnt">${block.items.length} tugas</div>
+        </div>
+        ${rows}
+      </div>`;
+  }).join('');
+
+  wrap.querySelectorAll('.agenda-task').forEach(el=>{
+    el.onclick = ()=>{
+      openDrawer(el.dataset.date);
+      fillFormForEdit(el.dataset.id);
+    };
+  });
+}
+
+function setViewMode(mode){
+  viewMode = mode;
+  document.getElementById('calCard').style.display = mode === 'calendar' ? '' : 'none';
+  document.getElementById('agendaCard').style.display = mode === 'list' ? '' : 'none';
+  document.getElementById('btnViewCalendar').classList.toggle('active', mode === 'calendar');
+  document.getElementById('btnViewList').classList.toggle('active', mode === 'list');
+  if (mode === 'list') renderAgenda();
+}
+document.getElementById('btnViewCalendar').onclick = ()=> setViewMode('calendar');
+document.getElementById('btnViewList').onclick = ()=> setViewMode('list');
 document.getElementById('nodateCard').onclick = ()=> openDrawer('');
 
 /* ============ CALENDAR ============ */
@@ -775,7 +885,7 @@ function renderCalendar(){
     cell.innerHTML = `
       <div class="daynum">${cellDate.getDate()}</div>
       <div class="cal-badges">
-        ${shown.map(t=>`<div class="cal-badge" style="background:${STATUS_COLOR[t.status]||'#94A3B8'}">
+        ${shown.map(t=>`<div class="cal-badge" style="background:${STATUS_COLOR[t.status]||'#94A3B8'}" title="${esc(t.tugas)} — ${esc(t.kategori||'Lainnya')} (${esc(t.status)})">
             ${t.prioritas==='Tinggi'?'🔺':''}${esc(t.tugas)}
           </div>`).join('')}
         ${more>0?`<div class="cal-more">+${more} lagi</div>`:''}
@@ -808,6 +918,16 @@ function renderTicker(){
   });
   content.innerHTML = items.join('') + items.join('');
   bar.classList.remove('is-empty');
+
+  // Durasi animasi disesuaikan dengan panjang teks supaya kecepatan geser (px/detik) selalu konsisten,
+  // tidak makin cepat kalau jumlah/panjang pengingat makin banyak.
+  requestAnimationFrame(()=>{
+    const PX_PER_SECOND = 55; // makin kecil angka ini, makin pelan gesernya
+    const MIN_DURATION = 20;  // detik minimum, biar tetap santai walau kontennya pendek
+    const distance = content.scrollWidth || 0;
+    const duration = Math.max(distance / PX_PER_SECOND, MIN_DURATION);
+    content.style.animationDuration = duration.toFixed(1) + 's';
+  });
 }
 
 /* ============ DRAWER (hari / bucket tanpa deadline) ============ */
@@ -1002,20 +1122,23 @@ function refreshAll(){
   renderStats();
   renderTicker();
   renderNodateCard();
+  if (viewMode === 'list') renderAgenda();
 }
 
 /* ============ NAV + FILTERS + SEARCH ============ */
 document.getElementById('prevMonth').onclick = ()=>{
   viewMonth--; if (viewMonth<0){ viewMonth=11; viewYear--; }
   renderCalendar(); renderStats();
+  if (viewMode === 'list') renderAgenda();
 };
 document.getElementById('nextMonth').onclick = ()=>{
   viewMonth++; if (viewMonth>11){ viewMonth=0; viewYear++; }
   renderCalendar(); renderStats();
+  if (viewMode === 'list') renderAgenda();
 };
 document.getElementById('searchInput').addEventListener('input', (e)=>{
   searchText = e.target.value.trim().toLowerCase();
-  renderCalendar(); renderNodateCard();
+  renderCalendar(); renderNodateCard(); if (viewMode==='list') renderAgenda();
 });
 document.getElementById('btnAddToday').onclick = ()=> openDrawer(todayISO());
 document.getElementById('drawerClose').onclick = closeDrawer;
@@ -1043,7 +1166,7 @@ document.getElementById('btnTestConn').onclick = async ()=>{
   saveAppsScriptUrl();
   const res = await pullFromSheet(true);
   if (res === 'ok'){ msg.textContent = '✅ Koneksi berhasil — data berhasil ditarik dari sheet "ToDo".'; msg.style.color = '#2BAE66'; }
-  else { msg.textContent = '❌ Gagal terhubung. Pastikan URL benar dan akses "Anyone".'; msg.style.color = '#E0546B'; }
+  else { msg.textContent = '❌ ' + (lastSyncError || 'Gagal terhubung. Pastikan URL benar dan akses "Anyone".'); msg.style.color = '#E0546B'; }
   refreshAll();
 };
 document.getElementById('btnPullNow').onclick = async ()=>{
@@ -1051,7 +1174,7 @@ document.getElementById('btnPullNow').onclick = async ()=>{
   const msg = document.getElementById('settingsMsg');
   msg.textContent = '🔄 Menarik data...'; msg.style.color = 'var(--muted)';
   const res = await pullFromSheet(true);
-  msg.textContent = res === 'ok' ? '✅ Data terbaru berhasil ditarik.' : '❌ Gagal mengambil data.';
+  msg.textContent = res === 'ok' ? '✅ Data terbaru berhasil ditarik.' : '❌ ' + (lastSyncError || 'Gagal mengambil data.');
   msg.style.color = res === 'ok' ? '#2BAE66' : '#E0546B';
   refreshAll();
 };
@@ -1083,9 +1206,12 @@ document.getElementById('btnCopyCode').onclick = async ()=>{
 };
 
 /* ============ SINKRONISASI GOOGLE SHEETS ============ */
+let lastSyncError = '';
+
 async function pullFromSheet(silent){
   const url = getAppsScriptUrl();
   const note = document.getElementById('syncNote');
+  lastSyncError = '';
   if (!url){ note.textContent = 'Belum tersambung ke Google Sheet'; return 'no-url'; }
   if (!silent) note.textContent = '🔄 Menarik data...';
   try{
@@ -1093,7 +1219,32 @@ async function pullFromSheet(silent){
     const timer = setTimeout(()=> controller.abort(), 20000);
     const res = await fetch(url + '?action=read', { cache:'no-store', signal: controller.signal });
     clearTimeout(timer);
-    const json = await res.json();
+
+    if (!res.ok){
+      lastSyncError = 'Server merespons HTTP ' + res.status + '. Cek apakah URL benar dan deployment masih aktif.';
+      if (!silent) note.textContent = '❌ Gagal tersambung (HTTP ' + res.status + ').';
+      return 'error';
+    }
+
+    const raw = await res.text();
+    let json;
+    try{
+      json = JSON.parse(raw);
+    }catch(parseErr){
+      const isLoginPage = /accounts\.google\.com|ServiceLogin|<html/i.test(raw);
+      lastSyncError = isLoginPage
+        ? 'Respons yang diterima adalah halaman login Google, bukan data JSON. Di Deploy > Manage deployments, pastikan "Who has access" diatur ke "Anyone" (bukan "Anyone with Google account" / "Only myself"), lalu buat versi deployment baru.'
+        : 'Respons dari server bukan JSON yang valid. Kemungkinan URL yang ditempel bukan URL web app yang benar (harus diakhiri /exec).';
+      if (!silent) note.textContent = '❌ Gagal tersambung ke Sheet.';
+      return 'error';
+    }
+
+    if (json && json.status === 'error'){
+      lastSyncError = json.message || 'Server Apps Script mengembalikan status error.';
+      if (!silent) note.textContent = '❌ Gagal tersambung ke Sheet.';
+      return 'error';
+    }
+
     TASKS = (json.tasks || []).map(r=>({
       id: String(r.id || '').trim(),
       tanggalDibuat: String(r.tanggaldibuat || '').trim(),
@@ -1109,6 +1260,9 @@ async function pullFromSheet(silent){
     note.textContent = '🔄 Tersinkron ' + String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0') + ':' + String(now.getSeconds()).padStart(2,'0');
     return 'ok';
   }catch(err){
+    lastSyncError = err.name === 'AbortError'
+      ? 'Waktu tunggu habis (20 detik) tanpa respons. Coba lagi — Apps Script kadang lambat saat pertama kali diakses.'
+      : 'Gagal melakukan koneksi (' + err.message + '). Kemungkinan penyebab: URL salah/terpotong saat disalin, deployment belum di-set "Anyone", atau belum membuat deployment baru setelah edit script.';
     if (!silent) note.textContent = '❌ Gagal tersambung ke Sheet.';
     return 'error';
   }

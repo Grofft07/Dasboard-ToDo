@@ -181,6 +181,30 @@ main{flex:1;min-width:0;padding:30px 34px 60px;max-width:1180px;}
 .agenda-task .meta{font-size:11.5px;color:var(--muted);margin-top:2px;display:flex;gap:8px;flex-wrap:wrap;}
 .agenda-task .meta .prio-tinggi{color:#E0546B;font-weight:600;}
 .agenda-empty{padding:40px 10px;text-align:center;color:var(--muted);font-size:13px;}
+
+/* ===== Checklist Harian ===== */
+.checklist-card{background:var(--white);border-radius:20px;box-shadow:var(--shadow);border:1px solid var(--line-soft);padding:20px 22px 24px;max-height:calc(100vh - 260px);overflow-y:auto;}
+.cl-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px;}
+.cl-title{font-family:'Poppins',sans-serif;font-weight:700;font-size:15.5px;color:var(--ink);}
+.cl-sub{font-size:12px;color:var(--muted);margin-top:3px;}
+.cl-progress-wrap{display:flex;align-items:center;gap:12px;margin-bottom:18px;}
+.cl-progress-bar{flex:1;height:9px;border-radius:20px;background:var(--canvas-2);border:1px solid var(--line-soft);overflow:hidden;}
+.cl-progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--selesai));border-radius:20px;transition:width .25s ease;}
+.cl-progress-text{font-size:11.5px;font-weight:700;color:var(--muted);white-space:nowrap;}
+.cl-section{border-top:1px solid var(--line-soft);padding-top:14px;margin-top:14px;}
+.cl-section:first-of-type{border-top:none;padding-top:0;margin-top:0;}
+.cl-section-head{display:flex;align-items:baseline;gap:9px;margin-bottom:9px;flex-wrap:wrap;}
+.cl-section-time{font-family:'Poppins',sans-serif;font-weight:700;font-size:11.5px;color:var(--accent-dark);background:var(--accent-soft);padding:3px 10px;border-radius:20px;white-space:nowrap;}
+.cl-section-title{font-family:'Poppins',sans-serif;font-weight:700;font-size:13.5px;color:var(--ink);}
+.cl-item{display:flex;align-items:flex-start;gap:10px;padding:8px 8px;border-radius:10px;cursor:pointer;user-select:none;}
+.cl-item:hover{background:var(--canvas-2);}
+.cl-check{
+  width:19px;height:19px;border-radius:6px;border:1.5px solid var(--line);flex-shrink:0;margin-top:1px;
+  display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff;background:var(--white);
+}
+.cl-item.done .cl-check{background:var(--selesai);border-color:var(--selesai);}
+.cl-item-label{font-size:13px;color:var(--ink);line-height:1.45;}
+.cl-item.done .cl-item-label{color:var(--muted);text-decoration:line-through;}
 .cal-cell:hover{border-color:var(--accent);background:var(--accent-soft);}
 .cal-cell.today{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset;}
 .cal-cell.pad{opacity:.42;}
@@ -347,6 +371,7 @@ main{flex:1;min-width:0;padding:30px 34px 60px;max-width:1180px;}
         <div class="view-toggle" id="viewToggle">
           <button class="vt-btn active" id="btnViewCalendar" type="button">🗓️ Kalender</button>
           <button class="vt-btn" id="btnViewList" type="button">📋 List Harian</button>
+          <button class="vt-btn" id="btnViewChecklist" type="button">✅ Checklist Harian</button>
         </div>
         <div class="search-box">🔍<input id="searchInput" type="text" placeholder="Cari tugas..."></div>
         <button class="btn btn-primary" id="btnAddToday">＋ Tambah Tugas</button>
@@ -374,6 +399,21 @@ main{flex:1;min-width:0;padding:30px 34px 60px;max-width:1180px;}
     <div class="agenda-card" id="agendaCard" style="display:none;">
       <div id="agendaList"></div>
       <div class="agenda-empty" id="agendaEmpty" style="display:none;">Tidak ada tugas berdeadline di bulan ini yang cocok dengan filter.</div>
+    </div>
+
+    <div class="checklist-card" id="checklistCard" style="display:none;">
+      <div class="cl-head">
+        <div>
+          <div class="cl-title" id="clDateLabel">Checklist Hari Ini</div>
+          <div class="cl-sub" id="clSub">Jobdesk harian: Advertiser · Marketplace · TikTok Specialist</div>
+        </div>
+        <button class="mini-btn danger" id="btnResetChecklist" type="button">↺ Reset Hari Ini</button>
+      </div>
+      <div class="cl-progress-wrap">
+        <div class="cl-progress-bar"><div class="cl-progress-fill" id="clProgressFill"></div></div>
+        <div class="cl-progress-text" id="clProgressText">0 / 0 selesai</div>
+      </div>
+      <div id="checklistList"></div>
     </div>
   </main>
 </div>
@@ -841,13 +881,181 @@ function setViewMode(mode){
   viewMode = mode;
   document.getElementById('calCard').style.display = mode === 'calendar' ? '' : 'none';
   document.getElementById('agendaCard').style.display = mode === 'list' ? '' : 'none';
+  document.getElementById('checklistCard').style.display = mode === 'checklist' ? '' : 'none';
   document.getElementById('btnViewCalendar').classList.toggle('active', mode === 'calendar');
   document.getElementById('btnViewList').classList.toggle('active', mode === 'list');
+  document.getElementById('btnViewChecklist').classList.toggle('active', mode === 'checklist');
   if (mode === 'list') renderAgenda();
+  if (mode === 'checklist') renderChecklist();
 }
 document.getElementById('btnViewCalendar').onclick = ()=> setViewMode('calendar');
 document.getElementById('btnViewList').onclick = ()=> setViewMode('list');
+document.getElementById('btnViewChecklist').onclick = ()=> setViewMode('checklist');
 document.getElementById('nodateCard').onclick = ()=> openDrawer('');
+
+/* ============ CHECKLIST HARIAN (jobdesk leader marketing) ============ */
+/* Senin–Jumat: 08.00–16.30 */
+const WEEKDAY_TEMPLATE = [
+  { time:'08.00–09.00', title:'Morning Check — Advertiser + Iklan Backup', items:[
+    'Cek performa iklan semalam (spending, CPL, hasil)',
+    'Cek saldo akun iklan → top up kalau mendekati habis',
+    'Catat angka penting ke sheet pendataan',
+    'Flag iklan yang CPL-nya jelek/boncos untuk dievaluasi'
+  ]},
+  { time:'09.00–10.00', title:'Marketplace Check', items:[
+    'Cek spending hari sebelumnya',
+    'Cek omzet & ROAS per marketplace/toko',
+    'Bandingkan dengan target harian/mingguan'
+  ]},
+  { time:'10.00–11.00', title:'TikTok Specialist Check-in', items:[
+    'Review performa konten yang sudah tayang (engagement, views)',
+    'Cek & approve jadwal konten hari ini / besok',
+    'Diskusi ide konten kalau ada yang perlu dibahas'
+  ]},
+  { time:'11.00–12.00', title:'Deep Work Iklan (Backup)', items:[
+    'Optimasi iklan: pause yang boncos, naikkan budget yang bagus',
+    'Cek/update target audiens kalau perlu'
+  ]},
+  { time:'12.00–13.00', title:'Istirahat', items:[
+    'Jeda makan siang — jangan buka laporan dulu 🙂'
+  ]},
+  { time:'13.00–14.00', title:'Pendataan & Laporan', items:[
+    'Rapikan data advertiser (spending, CPL, top up) ke sheet',
+    'Update data marketplace (omzet, ROAS) kalau belum sempat pagi'
+  ]},
+  { time:'14.00–15.00', title:'Koordinasi Tim & Follow-up', items:[
+    'Diskusi kendala hari ini dengan tim advertiser/marketplace/TikTok',
+    'Follow-up hal yang butuh keputusan sebagai leader'
+  ]},
+  { time:'15.00–16.00', title:'Cek Ulang Iklan (Sore)', items:[
+    'Cek lagi performa iklan siang → sore',
+    'Adjust budget/top up kalau perlu sebelum jam kerja habis'
+  ]},
+  { time:'16.00–16.30', title:'Wrap-up & Planning Besok', items:[
+    'Rekap singkat: apa yang sudah beres',
+    'Tulis 3 prioritas paling penting untuk besok'
+  ]}
+];
+
+/* Sabtu: 08.00–14.30 (jam kerja lebih pendek, sekaligus tutup minggu) */
+const SATURDAY_TEMPLATE = [
+  { time:'08.00–08.45', title:'Morning Check — Advertiser + Iklan Backup', items:[
+    'Cek performa iklan semalam (spending, CPL, hasil)',
+    'Cek saldo akun iklan → top up kalau mendekati habis',
+    'Catat angka penting ke sheet pendataan'
+  ]},
+  { time:'08.45–09.30', title:'Marketplace Check', items:[
+    'Cek spending & omzet minggu berjalan',
+    'Cek ROAS per marketplace/toko'
+  ]},
+  { time:'09.30–10.15', title:'TikTok Specialist Check-in', items:[
+    'Review performa konten seminggu terakhir',
+    'Cek & approve jadwal konten untuk Senin depan'
+  ]},
+  { time:'10.15–11.15', title:'Deep Work Iklan (Backup)', items:[
+    'Optimasi iklan: pause yang boncos, naikkan budget yang bagus',
+    'Cek/update target audiens kalau perlu'
+  ]},
+  { time:'11.15–11.45', title:'Istirahat', items:[
+    'Jeda sebentar sebelum lanjut ke sesi penutupan minggu 🙂'
+  ]},
+  { time:'11.45–12.30', title:'Pendataan & Laporan Mingguan', items:[
+    'Rapikan data advertiser (spending, CPL, top up) satu minggu',
+    'Update & rekap data marketplace (omzet, ROAS) mingguan'
+  ]},
+  { time:'12.30–13.30', title:'Evaluasi & Koordinasi Tim (Mingguan)', items:[
+    'Review pencapaian target minggu ini vs rencana',
+    'Diskusi kendala & keputusan yang masih menggantung dengan tim'
+  ]},
+  { time:'13.30–14.30', title:'Cek Ulang Iklan & Susun Prioritas Minggu Depan', items:[
+    'Cek performa iklan terakhir sebelum weekend',
+    'Tulis 3 prioritas utama untuk minggu depan'
+  ]}
+];
+
+function getTodayTemplate(){
+  const dow = new Date().getDay(); // 0=Minggu ... 6=Sabtu
+  if (dow >= 1 && dow <= 5) return { template: WEEKDAY_TEMPLATE, label: 'Jam kerja 08.00–16.30' };
+  if (dow === 6) return { template: SATURDAY_TEMPLATE, label: 'Jam kerja 08.00–14.30' };
+  return { template: null, label: 'Hari libur' };
+}
+
+function checklistStorageKey(){ return 'checklistHarian_' + todayISO(); }
+
+function loadChecklistState(){
+  try{
+    const raw = localStorage.getItem(checklistStorageKey());
+    return raw ? JSON.parse(raw) : {};
+  }catch(e){ return {}; }
+}
+function saveChecklistState(state){
+  try{ localStorage.setItem(checklistStorageKey(), JSON.stringify(state)); }catch(e){}
+}
+
+function renderChecklist(){
+  const dateLabel = document.getElementById('clDateLabel');
+  const clSub = document.getElementById('clSub');
+  const today = new Date();
+  const { template, label } = getTodayTemplate();
+  dateLabel.textContent = 'Checklist — ' + HARI[today.getDay()] + ', ' + today.getDate() + ' ' + BULAN[today.getMonth()] + ' ' + today.getFullYear();
+  if (clSub) clSub.textContent = label + ' · Advertiser · Marketplace · TikTok Specialist';
+
+  const wrap = document.getElementById('checklistList');
+  const progressWrap = document.querySelector('.cl-progress-wrap');
+
+  if (!template){
+    if (progressWrap) progressWrap.style.display = 'none';
+    wrap.innerHTML = `<div class="empty-note">🎉 Hari ini libur (Minggu). Selamat istirahat, ga perlu mikirin checklist dulu.</div>`;
+    return;
+  }
+  if (progressWrap) progressWrap.style.display = '';
+
+  const state = loadChecklistState();
+  let total = 0, doneCount = 0;
+
+  wrap.innerHTML = template.map((section, si)=>{
+    const rows = section.items.map((label, ii)=>{
+      const id = 's' + si + 'i' + ii;
+      total++;
+      const isDone = !!state[id];
+      if (isDone) doneCount++;
+      return `
+        <div class="cl-item ${isDone?'done':''}" data-id="${id}">
+          <div class="cl-check">${isDone?'✓':''}</div>
+          <div class="cl-item-label">${esc(label)}</div>
+        </div>`;
+    }).join('');
+    return `
+      <div class="cl-section">
+        <div class="cl-section-head">
+          <div class="cl-section-time">${esc(section.time)}</div>
+          <div class="cl-section-title">${esc(section.title)}</div>
+        </div>
+        ${rows}
+      </div>`;
+  }).join('');
+
+  const pct = total ? Math.round((doneCount/total)*100) : 0;
+  document.getElementById('clProgressFill').style.width = pct + '%';
+  document.getElementById('clProgressText').textContent = doneCount + ' / ' + total + ' selesai';
+
+  wrap.querySelectorAll('.cl-item').forEach(el=>{
+    el.onclick = ()=>{
+      const s = loadChecklistState();
+      const id = el.dataset.id;
+      s[id] = !s[id];
+      saveChecklistState(s);
+      renderChecklist();
+    };
+  });
+}
+
+document.getElementById('btnResetChecklist').onclick = ()=>{
+  if (!confirm('Reset semua centang checklist hari ini?')) return;
+  saveChecklistState({});
+  renderChecklist();
+  toast('Checklist hari ini direset');
+};
 
 /* ============ CALENDAR ============ */
 function renderCalendar(){

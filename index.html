@@ -478,7 +478,7 @@ main{flex:1;min-width:0;padding:30px 34px 60px;max-width:1180px;}
       <div class="cl-head">
         <div>
           <div class="cl-title" id="clDateLabel">Checklist Hari Ini</div>
-          <div class="cl-sub" id="clSub">Jobdesk harian: Advertiser · Marketplace · TikTok Specialist</div>
+          <div class="cl-sub" id="clSub">Jobdesk harian: Advertiser · Marketplace · TikTok Specialist · Affiliate Specialist</div>
         </div>
         <button class="mini-btn danger" id="btnResetChecklist" type="button">↺ Reset Hari Ini</button>
       </div>
@@ -625,6 +625,16 @@ main{flex:1;min-width:0;padding:30px 34px 60px;max-width:1180px;}
           <stop offset="55%" stop-color="#C6D3DE"/>
           <stop offset="100%" stop-color="#8FA1B0"/>
         </radialGradient>
+        <linearGradient id="hairGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#4A3428"/>
+          <stop offset="45%" stop-color="#2A1D16"/>
+          <stop offset="100%" stop-color="#180F0A"/>
+        </linearGradient>
+        <radialGradient id="irisGrad" cx="40%" cy="35%" r="70%">
+          <stop offset="0%" stop-color="#8C5A3C"/>
+          <stop offset="55%" stop-color="#4A2C1B"/>
+          <stop offset="100%" stop-color="#1C110A"/>
+        </radialGradient>
       </defs>
 
       <!-- tali gantungan -->
@@ -667,18 +677,28 @@ main{flex:1;min-width:0;padding:30px 34px 60px;max-width:1180px;}
 
       <!-- tudung depan -->
       <path d="M60 118 C56 92 76 68 100 68 C124 68 144 92 140 118 C136 92 120 78 100 78 C80 78 64 92 60 118 Z" fill="url(#hoodGrad)"/>
-      <!-- poni -->
-      <path d="M66 104 C70 86 86 76 100 76 C114 76 130 86 134 104 C124 92 112 86 100 86 C88 86 76 92 66 104 Z" fill="#3A2E28"/>
+      <!-- rambut spiky ala-anime -->
+      <path d="M64 102 C65 92 68 82 72 70 L79 85 L88 64 L96 84 L100 62 L104 84 L112 64 L121 85 L128 70 C132 82 135 92 136 102 C124 90 112 84 100 84 C88 84 76 90 64 102 Z" fill="url(#hairGrad)"/>
+      <path d="M88 64 L96 84" stroke="#6B4A34" stroke-width="1.4" opacity=".45" stroke-linecap="round"/>
+      <path d="M112 64 L104 84" stroke="#6B4A34" stroke-width="1.4" opacity=".45" stroke-linecap="round"/>
 
       <!-- telinga -->
       <ellipse cx="61" cy="124" rx="6" ry="9" fill="#FDE3CE"/>
       <ellipse cx="139" cy="124" rx="6" ry="9" fill="#FDE3CE"/>
 
-      <!-- mata -->
-      <ellipse cx="84" cy="124" rx="6.2" ry="8.2" fill="#2A2019"/>
-      <ellipse cx="116" cy="124" rx="6.2" ry="8.2" fill="#2A2019"/>
-      <circle cx="86.5" cy="120.5" r="2.1" fill="#fff"/>
-      <circle cx="118.5" cy="120.5" r="2.1" fill="#fff"/>
+      <!-- alis -->
+      <path d="M77 110 Q84 105 91 109" stroke="#2A1D16" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+      <path d="M109 109 Q116 105 123 110" stroke="#2A1D16" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+
+      <!-- mata ala-anime (besar + kilau ganda) -->
+      <ellipse cx="83" cy="126" rx="8.6" ry="11.5" fill="url(#irisGrad)"/>
+      <ellipse cx="117" cy="126" rx="8.6" ry="11.5" fill="url(#irisGrad)"/>
+      <path d="M74.5 121 Q83 115 91.5 121" stroke="#180F0A" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+      <path d="M108.5 121 Q117 115 125.5 121" stroke="#180F0A" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+      <circle cx="86" cy="120.5" r="2.6" fill="#fff"/>
+      <circle cx="120" cy="120.5" r="2.6" fill="#fff"/>
+      <circle cx="80.5" cy="131" r="1.3" fill="#fff" opacity=".85"/>
+      <circle cx="114.5" cy="131" r="1.3" fill="#fff" opacity=".85"/>
 
       <!-- pipi -->
       <ellipse cx="74" cy="138" rx="7" ry="4.5" fill="#F4A6A0" opacity=".6"/>
@@ -1064,21 +1084,28 @@ document.getElementById('nodateCard').onclick = ()=> openDrawer('');
 /* ============ CHECKLIST HARIAN (jobdesk leader marketing) ============ */
 /* Senin–Jumat: 08.00–16.30 */
 const WEEKDAY_TEMPLATE = [
-  { time:'08.00–09.00', title:'Morning Check — Advertiser + Iklan Backup', items:[
+  { time:'08.00–08.45', title:'Morning Check — Advertiser + Iklan Backup', items:[
     'Cek performa iklan semalam (spending, CPL, hasil)',
     'Cek saldo akun iklan → top up kalau mendekati habis',
     'Catat angka penting ke sheet pendataan',
     'Flag iklan yang CPL-nya jelek/boncos untuk dievaluasi'
   ]},
-  { time:'09.00–10.00', title:'Marketplace Check', items:[
+  { time:'08.45–09.30', title:'Marketplace Check', items:[
     'Cek spending hari sebelumnya',
     'Cek omzet & ROAS per marketplace/toko',
     'Bandingkan dengan target harian/mingguan'
   ]},
-  { time:'10.00–11.00', title:'TikTok Specialist Check-in', items:[
+  { time:'09.30–10.15', title:'TikTok Specialist Check-in', items:[
     'Review performa konten yang sudah tayang (engagement, views)',
     'Cek & approve jadwal konten hari ini / besok',
     'Diskusi ide konten kalau ada yang perlu dibahas'
+  ]},
+  { time:'10.15–11.00', title:'Affiliate Specialist Crosscek', items:[
+    'Cek komisi affiliate harian',
+    'Cek omzet dari program/link affiliate',
+    'Cek status sampel produk ke affiliate (kirim/pakai)',
+    'Hitung/cek ROI affiliate dibanding komisi yang keluar',
+    'Broadcast info promo/produk + approve request affiliate yang masuk'
   ]},
   { time:'11.00–12.00', title:'Deep Work Iklan (Backup)', items:[
     'Optimasi iklan: pause yang boncos, naikkan budget yang bagus',
@@ -1092,7 +1119,7 @@ const WEEKDAY_TEMPLATE = [
     'Update data marketplace (omzet, ROAS) kalau belum sempat pagi'
   ]},
   { time:'14.00–15.00', title:'Koordinasi Tim & Follow-up', items:[
-    'Diskusi kendala hari ini dengan tim advertiser/marketplace/TikTok',
+    'Diskusi kendala hari ini dengan tim advertiser/marketplace/TikTok/affiliate',
     'Follow-up hal yang butuh keputusan sebagai leader'
   ]},
   { time:'15.00–16.00', title:'Cek Ulang Iklan (Sore)', items:[
@@ -1107,35 +1134,41 @@ const WEEKDAY_TEMPLATE = [
 
 /* Sabtu: 08.00–14.30 (jam kerja lebih pendek, sekaligus tutup minggu) */
 const SATURDAY_TEMPLATE = [
-  { time:'08.00–08.45', title:'Morning Check — Advertiser + Iklan Backup', items:[
+  { time:'08.00–08.40', title:'Morning Check — Advertiser + Iklan Backup', items:[
     'Cek performa iklan semalam (spending, CPL, hasil)',
     'Cek saldo akun iklan → top up kalau mendekati habis',
     'Catat angka penting ke sheet pendataan'
   ]},
-  { time:'08.45–09.30', title:'Marketplace Check', items:[
+  { time:'08.40–09.15', title:'Marketplace Check', items:[
     'Cek spending & omzet minggu berjalan',
     'Cek ROAS per marketplace/toko'
   ]},
-  { time:'09.30–10.15', title:'TikTok Specialist Check-in', items:[
+  { time:'09.15–09.50', title:'TikTok Specialist Check-in', items:[
     'Review performa konten seminggu terakhir',
     'Cek & approve jadwal konten untuk Senin depan'
   ]},
-  { time:'10.15–11.15', title:'Deep Work Iklan (Backup)', items:[
+  { time:'09.50–10.25', title:'Affiliate Specialist Crosscek (Mingguan)', items:[
+    'Rekap komisi & omzet affiliate seminggu',
+    'Cek status sampel yang belum terkirim/dipakai',
+    'Hitung ROI affiliate mingguan',
+    'Broadcast & approve request affiliate yang tertunda'
+  ]},
+  { time:'10.25–11.15', title:'Deep Work Iklan (Backup)', items:[
     'Optimasi iklan: pause yang boncos, naikkan budget yang bagus',
     'Cek/update target audiens kalau perlu'
   ]},
   { time:'11.15–11.45', title:'Istirahat', items:[
     'Jeda sebentar sebelum lanjut ke sesi penutupan minggu 🙂'
   ]},
-  { time:'11.45–12.30', title:'Pendataan & Laporan Mingguan', items:[
+  { time:'11.45–12.25', title:'Pendataan & Laporan Mingguan', items:[
     'Rapikan data advertiser (spending, CPL, top up) satu minggu',
     'Update & rekap data marketplace (omzet, ROAS) mingguan'
   ]},
-  { time:'12.30–13.30', title:'Evaluasi & Koordinasi Tim (Mingguan)', items:[
+  { time:'12.25–13.25', title:'Evaluasi & Koordinasi Tim (Mingguan)', items:[
     'Review pencapaian target minggu ini vs rencana',
     'Diskusi kendala & keputusan yang masih menggantung dengan tim'
   ]},
-  { time:'13.30–14.30', title:'Cek Ulang Iklan & Susun Prioritas Minggu Depan', items:[
+  { time:'13.25–14.30', title:'Cek Ulang Iklan & Susun Prioritas Minggu Depan', items:[
     'Cek performa iklan terakhir sebelum weekend',
     'Tulis 3 prioritas utama untuk minggu depan'
   ]}
@@ -1166,7 +1199,7 @@ function renderChecklist(){
   const today = new Date();
   const { template, label } = getTodayTemplate();
   dateLabel.textContent = 'Checklist — ' + HARI[today.getDay()] + ', ' + today.getDate() + ' ' + BULAN[today.getMonth()] + ' ' + today.getFullYear();
-  if (clSub) clSub.textContent = label + ' · Advertiser · Marketplace · TikTok Specialist';
+  if (clSub) clSub.textContent = label + ' · Advertiser · Marketplace · TikTok Specialist · Affiliate Specialist';
 
   const wrap = document.getElementById('checklistList');
   const progressWrap = document.querySelector('.cl-progress-wrap');

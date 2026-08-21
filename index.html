@@ -20,7 +20,7 @@
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 body{
-  font-family:'Inter',sans-serif; color:var(--ink); font-size:14px;
+  font-family:'Inter',sans-serif; color:var(--ink); font-size:12.5px;
   background:linear-gradient(160deg,var(--canvas-1),var(--canvas-2) 55%);
   min-height:100vh;
 }
@@ -35,24 +35,24 @@ input,select,textarea{font-family:inherit;}
 
 /* ============ SIDEBAR ============ */
 .sidebar{
-  width:296px;flex-shrink:0;background:linear-gradient(185deg,var(--navy),var(--navy-2) 70%);
-  color:#fff;padding:28px 22px 22px;display:flex;flex-direction:column;gap:24px;
+  width:248px;flex-shrink:0;background:linear-gradient(185deg,var(--navy),var(--navy-2) 70%);
+  color:#fff;padding:20px 16px 16px;display:flex;flex-direction:column;gap:18px;
   position:sticky;top:0;height:100vh;overflow-y:auto;
 }
 .brand{display:flex;align-items:center;gap:11px;}
 .brand-mark{
-  width:40px;height:40px;border-radius:11px;background:rgba(255,255,255,.14);
-  display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;
+  width:32px;height:32px;border-radius:9px;background:rgba(255,255,255,.14);
+  display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;
 }
 .brand-text .name{font-family:'Poppins',sans-serif;font-weight:700;font-size:15.5px;letter-spacing:.01em;line-height:1.25;}
 .brand-text .sub{font-size:10px;color:rgba(255,255,255,.55);letter-spacing:.09em;text-transform:uppercase;margin-top:2px;}
 
 .live-clock{
   background:linear-gradient(135deg,rgba(255,255,255,.13),rgba(255,255,255,.05));
-  border:1px solid var(--navy-line);border-radius:14px;padding:14px 16px;text-align:center;
+  border:1px solid var(--navy-line);border-radius:12px;padding:10px 12px;text-align:center;
 }
 .live-clock .lc-time{
-  font-family:'Poppins',sans-serif;font-weight:700;font-size:26px;letter-spacing:.02em;color:#fff;
+  font-family:'Poppins',sans-serif;font-weight:700;font-size:20px;letter-spacing:.02em;color:#fff;
   font-variant-numeric:tabular-nums;line-height:1.1;
 }
 .live-clock .lc-date{font-size:10.5px;color:rgba(255,255,255,.6);margin-top:5px;letter-spacing:.04em;text-transform:uppercase;}
@@ -62,7 +62,7 @@ input,select,textarea{font-family:inherit;}
   border:1px solid var(--navy-line);border-radius:12px;padding:6px 8px;
 }
 .month-nav button{
-  width:30px;height:30px;border-radius:8px;border:none;background:none;color:#fff;font-size:15px;
+  width:25px;height:25px;border-radius:7px;border:none;background:none;color:#fff;font-size:13px;
   display:flex;align-items:center;justify-content:center;
 }
 .month-nav button:hover{background:rgba(255,255,255,.14);}
@@ -75,16 +75,16 @@ input,select,textarea{font-family:inherit;}
 
 .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
 .stat-card{
-  background:rgba(255,255,255,.07);border:1px solid var(--navy-line);border-radius:12px;padding:11px 12px;
+  background:rgba(255,255,255,.07);border:1px solid var(--navy-line);border-radius:10px;padding:8px 9px;
 }
-.stat-card .num{font-family:'Poppins',sans-serif;font-weight:700;font-size:20px;line-height:1;}
+.stat-card .num{font-family:'Poppins',sans-serif;font-weight:700;font-size:16px;line-height:1;}
 .stat-card .lbl{font-size:10.5px;color:rgba(255,255,255,.6);margin-top:6px;display:flex;align-items:center;gap:6px;}
 .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
 
 .pill-group{display:flex;flex-wrap:wrap;gap:7px;}
 .pill{
-  padding:7px 13px;border-radius:20px;border:1px solid var(--navy-line);background:rgba(255,255,255,.06);
-  color:rgba(255,255,255,.78);font-size:12px;font-weight:600;display:flex;align-items:center;gap:6px;
+  padding:5px 10px;border-radius:18px;border:1px solid var(--navy-line);background:rgba(255,255,255,.06);
+  color:rgba(255,255,255,.78);font-size:10.5px;font-weight:600;display:flex;align-items:center;gap:5px;
 }
 .pill.active{background:#fff;color:var(--navy);border-color:#fff;}
 .pill .dot{width:7px;height:7px;}
@@ -98,14 +98,14 @@ input,select,textarea{font-family:inherit;}
 .sync-note{font-size:10.5px;color:rgba(255,255,255,.45);text-align:center;font-family:'Inter',monospace;}
 
 /* ============ MAIN ============ */
-main{flex:1;min-width:0;padding:30px 34px 60px;max-width:1180px;}
-.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:20px;}
-.topbar h1{font-size:21px;font-weight:700;color:var(--ink);}
-.topbar .crumb{font-size:12px;color:var(--muted);margin-top:3px;}
+main{flex:1;min-width:0;padding:20px 24px 40px;max-width:1040px;}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px;}
+.topbar h1{font-size:17px;font-weight:700;color:var(--ink);}
+.topbar .crumb{font-size:10.5px;color:var(--muted);margin-top:2px;}
 .top-actions{display:flex;align-items:center;gap:10px;}
 .search-box{
-  display:flex;align-items:center;gap:8px;background:var(--white);border:1px solid var(--line);
-  border-radius:11px;padding:9px 14px;min-width:220px;
+  display:flex;align-items:center;gap:6px;background:var(--white);border:1px solid var(--line);
+  border-radius:10px;padding:7px 11px;min-width:170px;
   box-shadow:inset 0 1px 2px rgba(15,58,92,.05);
   transition:box-shadow .15s ease, border-color .15s ease;
 }
@@ -113,8 +113,8 @@ main{flex:1;min-width:0;padding:30px 34px 60px;max-width:1180px;}
 .search-box input{border:none;outline:none;font-size:13px;width:100%;color:var(--ink);background:none;}
 .search-box input::placeholder{color:#A9BDCF;}
 .btn{
-  border:none;border-radius:11px;padding:10px 18px;font-size:13px;font-weight:700;display:inline-flex;
-  align-items:center;gap:8px;white-space:nowrap;
+  border:none;border-radius:10px;padding:8px 14px;font-size:11.5px;font-weight:700;display:inline-flex;
+  align-items:center;gap:6px;white-space:nowrap;
 }
 .btn-primary{
   background:linear-gradient(135deg,var(--accent),var(--accent-dark));color:#fff;
@@ -129,20 +129,20 @@ main{flex:1;min-width:0;padding:30px 34px 60px;max-width:1180px;}
 
 /* ===== Ticker (pengingat deadline) ===== */
 .ticker{
-  display:flex;align-items:center;background:#FDEDEF;border:1px solid #F6D2D8;border-radius:13px;
-  overflow:hidden;margin-bottom:16px;
+  display:flex;align-items:center;background:#FDEDEF;border:1px solid #F6D2D8;border-radius:11px;
+  overflow:hidden;margin-bottom:12px;
 }
 .ticker.is-empty{display:none;}
 .ticker-label{
-  flex-shrink:0;background:var(--tinggi);color:#fff;font-size:11px;font-weight:800;
-  padding:9px 14px;letter-spacing:.04em;white-space:nowrap;
+  flex-shrink:0;background:var(--tinggi);color:#fff;font-size:9.5px;font-weight:800;
+  padding:7px 11px;letter-spacing:.04em;white-space:nowrap;
 }
-.ticker-track{flex:1;overflow:hidden;white-space:nowrap;position:relative;height:32px;}
+.ticker-track{flex:1;overflow:hidden;white-space:nowrap;position:relative;height:26px;}
 .ticker-track .ticker-content{
   display:inline-block;padding-left:100%;animation:ticker-scroll 45s linear infinite;
-  line-height:32px;font-size:12.5px;font-weight:600;color:#B23A4E;
+  line-height:26px;font-size:11px;font-weight:600;color:#B23A4E;
 }
-.ticker-track .ticker-content span{margin-right:42px;}
+.ticker-track .ticker-content span{margin-right:36px;}
 .ticker-track .ticker-content span.due-today{color:#B8790E;}
 .ticker-track .ticker-content span.overdue{color:#C0342B;}
 @keyframes ticker-scroll{0%{transform:translateX(0);}100%{transform:translateX(-100%);}}
@@ -150,36 +150,36 @@ main{flex:1;min-width:0;padding:30px 34px 60px;max-width:1180px;}
 
 /* ===== Tanpa deadline strip ===== */
 .nodate-card{
-  display:flex;align-items:center;gap:12px;background:var(--white);border:1.5px dashed var(--line);
-  border-radius:14px;padding:13px 16px;margin-bottom:16px;cursor:pointer;
+  display:flex;align-items:center;gap:10px;background:var(--white);border:1.5px dashed var(--line);
+  border-radius:12px;padding:10px 13px;margin-bottom:12px;cursor:pointer;
 }
 .nodate-card:hover{border-color:var(--accent);background:var(--accent-soft);}
-.nodate-card .ic{font-size:18px;flex-shrink:0;}
-.nodate-card .txt{flex:1;font-size:13px;font-weight:600;color:var(--ink);}
-.nodate-card .txt small{display:block;font-weight:400;color:var(--muted);font-size:11.5px;margin-top:2px;}
-.nodate-card .count-chip{background:var(--accent-soft);color:var(--accent-dark);border-radius:20px;padding:4px 11px;font-size:12px;font-weight:700;}
+.nodate-card .ic{font-size:15px;flex-shrink:0;}
+.nodate-card .txt{flex:1;font-size:11.5px;font-weight:600;color:var(--ink);}
+.nodate-card .txt small{display:block;font-weight:400;color:var(--muted);font-size:10px;margin-top:2px;}
+.nodate-card .count-chip{background:var(--accent-soft);color:var(--accent-dark);border-radius:18px;padding:3px 9px;font-size:11px;font-weight:700;}
 
 /* ===== Calendar card ===== */
 .cal-card{
-  background:var(--white);border-radius:20px;box-shadow:var(--shadow);border:1px solid var(--line-soft);
-  padding:22px 22px 10px;
+  background:var(--white);border-radius:16px;box-shadow:var(--shadow);border:1px solid var(--line-soft);
+  padding:16px 16px 8px;
 }
-.cal-dow{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:0;margin-bottom:6px;}
-.cal-dow div{text-align:center;font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--muted);
-  text-transform:uppercase;padding:8px 0;}
-.cal-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;padding-bottom:14px;}
+.cal-dow{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:0;margin-bottom:4px;}
+.cal-dow div{text-align:center;font-size:9.5px;font-weight:700;letter-spacing:.06em;color:var(--muted);
+  text-transform:uppercase;padding:6px 0;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;padding-bottom:10px;}
 .cal-cell{
-  min-height:96px;min-width:0;overflow:hidden;border-radius:13px;border:1px solid var(--line-soft);padding:9px 9px 8px;
-  display:flex;flex-direction:column;gap:6px;background:var(--canvas-2);cursor:pointer;
+  min-height:74px;min-width:0;overflow:hidden;border-radius:11px;border:1px solid var(--line-soft);padding:7px 7px 6px;
+  display:flex;flex-direction:column;gap:4px;background:var(--canvas-2);cursor:pointer;
 }
 
 .view-toggle{
-  display:flex;gap:4px;background:linear-gradient(180deg,#EDF4FB,#E1EDF9);
-  border:1px solid var(--line);border-radius:12px;padding:4px;
+  display:flex;gap:3px;background:linear-gradient(180deg,#EDF4FB,#E1EDF9);
+  border:1px solid var(--line);border-radius:11px;padding:3px;
   box-shadow:inset 0 1px 3px rgba(15,58,92,.08);
 }
 .vt-btn{
-  border:none;background:transparent;padding:8px 14px;border-radius:9px;font-size:12.5px;font-weight:600;
+  border:none;background:transparent;padding:6px 11px;border-radius:8px;font-size:11px;font-weight:600;
   color:var(--muted);cursor:pointer;white-space:nowrap;
 }
 .vt-btn:hover{color:var(--accent-dark);background:rgba(255,255,255,.55);}
@@ -236,12 +236,12 @@ main{flex:1;min-width:0;padding:30px 34px 60px;max-width:1180px;}
 .cal-cell:hover{border-color:var(--accent);background:var(--accent-soft);}
 .cal-cell.today{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset;}
 .cal-cell.pad{opacity:.42;}
-.cal-cell .daynum{font-family:'Poppins',sans-serif;font-weight:700;font-size:13px;color:var(--ink);}
+.cal-cell .daynum{font-family:'Poppins',sans-serif;font-weight:700;font-size:11px;color:var(--ink);}
 .cal-cell.today .daynum{color:var(--accent-dark);}
 .cal-badges{display:flex;flex-direction:column;gap:4px;min-width:0;}
 .cal-badge{
-  font-size:10.5px;font-weight:600;padding:3px 7px;border-radius:6px;color:#fff;min-width:0;
-  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:flex;align-items:center;gap:5px;
+  font-size:9px;font-weight:600;padding:2px 6px;border-radius:5px;color:#fff;min-width:0;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:flex;align-items:center;gap:4px;
 }
 .cal-badge > *{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;}
 .cal-more{font-size:10px;color:var(--muted);font-weight:600;padding-left:2px;}
@@ -253,13 +253,13 @@ main{flex:1;min-width:0;padding:30px 34px 60px;max-width:1180px;}
 .eval-week-head{display:flex;align-items:baseline;gap:8px;margin-bottom:11px;padding-bottom:9px;border-bottom:1px solid var(--line-soft);}
 .eval-week-head .w{font-family:'Poppins',sans-serif;font-weight:700;font-size:13.5px;color:var(--ink);}
 .eval-week-head .cnt{font-size:11px;color:var(--muted);background:var(--canvas-2);padding:2px 8px;border-radius:10px;}
-.eval-entry{border:1.5px solid var(--line);border-radius:14px;padding:14px 15px;margin-bottom:10px;background:var(--canvas-2);}
+.eval-entry{border:1.5px solid var(--line);border-radius:14px;padding:14px 15px;margin-bottom:10px;background:var(--canvas-2);min-width:0;overflow-wrap:break-word;}
 .eval-entry:last-child{margin-bottom:0;}
-.eval-entry-top{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:11px;}
-.eval-wswn{display:flex;flex-direction:column;gap:8px;margin-bottom:10px;}
-.eval-wswn .row{display:flex;gap:10px;align-items:flex-start;}
+.eval-entry-top{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:11px;min-width:0;}
+.eval-wswn{display:flex;flex-direction:column;gap:8px;margin-bottom:10px;min-width:0;}
+.eval-wswn .row{display:flex;gap:10px;align-items:flex-start;min-width:0;}
 .eval-wswn .lbl{flex-shrink:0;width:78px;font-size:10px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--accent-dark);padding-top:2px;}
-.eval-wswn .txt{font-size:12.5px;color:var(--ink);line-height:1.55;white-space:pre-wrap;flex:1;overflow-wrap:break-word;}
+.eval-wswn .txt{font-size:12.5px;color:var(--ink);line-height:1.55;white-space:pre-wrap;flex:1;min-width:0;overflow-wrap:break-word;word-break:break-word;}
 .eval-meta-row{display:flex;gap:14px;flex-wrap:wrap;font-size:11.5px;color:var(--muted);margin-bottom:10px;}
 
 @media (max-width:920px){
@@ -370,7 +370,7 @@ main{flex:1;min-width:0;padding:30px 34px 60px;max-width:1180px;}
   touch-action:none;
 }
 .mascot-toy{
-  width:92px;cursor:grab;user-select:none;transform-origin:50% 8%;
+  width:66px;cursor:grab;user-select:none;transform-origin:50% 8%;
   animation:mascot-swing 4.2s ease-in-out infinite;
 }
 .mascot-toy svg{width:100%;height:auto;display:block;filter:drop-shadow(0 10px 16px rgba(15,58,92,.35));}
@@ -1211,28 +1211,30 @@ function renderAgenda(){
 
 /* ============ EVALUASI MINGGUAN (What / So What / Now What) ============ */
 // Ambil info minggu ISO (Senin–Minggu) dari sebuah tanggal, buat pengelompokan per minggu.
+// Ambil info minggu (Senin–Minggu) dari sebuah tanggal, lalu beri nomor minggu
+// relatif ke DALAM BULAN (Minggu ke-1/2/3/4/5), bukan minggu ke-sekian dalam setahun (ISO),
+// supaya lebih gampang dipahami untuk konteks evaluasi kerja mingguan.
 function getISOWeekInfo(dateStr){
   const d = dateStr ? parseISO(dateStr) : new Date();
   const dayNr = (d.getDay() + 6) % 7; // Senin=0 ... Minggu=6
   const monday = new Date(d); monday.setDate(d.getDate() - dayNr);
   const sunday = new Date(monday); sunday.setDate(monday.getDate() + 6);
 
-  const target = new Date(d.valueOf());
-  target.setDate(target.getDate() - dayNr + 3);
-  const firstThursday = target.valueOf();
-  const jan1 = new Date(target.getFullYear(), 0, 1);
-  let firstWeekThu = new Date(target.getFullYear(), 0, 1);
-  if (jan1.getDay() !== 4){ firstWeekThu.setMonth(0, 1 + ((4 - jan1.getDay()) + 7) % 7); }
-  const week = 1 + Math.round((firstThursday - firstWeekThu.valueOf()) / 604800000);
+  // Kamis di minggu yang sama dipakai sebagai "pemilik" bulan — kalau minggu itu
+  // melintasi pergantian bulan, bulan yang dipakai adalah bulan tempat mayoritas harinya berada.
+  const thursday = new Date(monday); thursday.setDate(monday.getDate() + 3);
+  const weekOfMonth = Math.ceil(thursday.getDate() / 7);
+  const monthKey = thursday.getFullYear() + '-' + String(thursday.getMonth()+1).padStart(2,'0');
 
-  return { key: target.getFullYear() + '-W' + String(week).padStart(2,'0'), week, monday, sunday };
+  return { key: monthKey + '-W' + weekOfMonth, weekOfMonth, monthDate: thursday, monday, sunday };
 }
 function formatWeekLabel(info){
   const mo = info.monday, su = info.sunday;
   const sameMonth = mo.getMonth() === su.getMonth();
   const moStr = mo.getDate() + (sameMonth ? '' : ' ' + BULAN[mo.getMonth()].slice(0,3));
   const suStr = su.getDate() + ' ' + BULAN[su.getMonth()].slice(0,3) + ' ' + su.getFullYear();
-  return 'Minggu ke-' + info.week + ' · ' + moStr + '–' + suStr;
+  const bulanLabel = BULAN[info.monthDate.getMonth()] + ' ' + info.monthDate.getFullYear();
+  return 'Minggu ke-' + info.weekOfMonth + ' ' + bulanLabel + ' · ' + moStr + '–' + suStr;
 }
 
 function renderEvalView(){

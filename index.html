@@ -262,20 +262,27 @@ main{flex:1;min-width:0;padding:30px 34px 60px;}
 
 /* ===== Anak Baru (Onboarding) ===== */
 .emp-wrap{display:flex;flex-direction:column;gap:16px;max-height:calc(100vh - 260px);overflow-y:auto;padding-right:2px;}
+.emp-export-bar{display:flex;align-items:center;gap:14px;background:var(--white);border:1.5px dashed var(--accent);border-radius:14px;padding:12px 16px;flex-wrap:wrap;}
+.emp-export-bar label{display:flex;align-items:center;gap:7px;font-size:12.5px;font-weight:700;color:var(--ink);cursor:pointer;white-space:nowrap;}
+.emp-export-bar .cnt{font-size:12px;color:var(--muted);flex:1;}
+.emp-select-checkbox{width:17px;height:17px;accent-color:var(--accent);cursor:pointer;flex-shrink:0;margin-top:2px;}
 .emp-card{background:var(--white);border-radius:20px;box-shadow:var(--shadow);border:1px solid var(--line-soft);padding:20px 22px;}
 .emp-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px;}
 .emp-name-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
 .emp-avatar{width:40px;height:40px;border-radius:12px;background:var(--accent-soft);color:var(--accent-dark);
   display:flex;align-items:center;justify-content:center;font-family:'Poppins',sans-serif;font-weight:700;font-size:15px;flex-shrink:0;}
 .emp-name{font-family:'Poppins',sans-serif;font-weight:700;font-size:15px;color:var(--ink);}
-.emp-meta{font-size:11.5px;color:var(--muted);margin-top:3px;display:flex;gap:10px;flex-wrap:wrap;}
+.emp-meta{font-size:11.5px;color:var(--muted);margin-top:6px;display:flex;gap:7px;flex-wrap:wrap;}
+.emp-meta span{display:inline-flex;align-items:center;gap:5px;background:var(--canvas-2);border:1px solid var(--line-soft);border-radius:20px;padding:4px 11px;font-weight:600;}
 .emp-actions{display:flex;gap:6px;flex-shrink:0;}
 .status-badge{font-size:10.5px;font-weight:700;padding:4px 11px;border-radius:20px;color:#fff;white-space:nowrap;}
 .emp-progress-wrap{display:flex;align-items:center;gap:12px;margin:12px 0 4px;}
 .emp-progress-bar{flex:1;height:8px;border-radius:20px;background:var(--canvas-2);border:1px solid var(--line-soft);overflow:hidden;}
 .emp-progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--selesai));border-radius:20px;transition:width .25s ease;}
 .emp-progress-text{font-size:11px;font-weight:700;color:var(--muted);white-space:nowrap;}
-.emp-note{font-size:12px;color:var(--muted);line-height:1.5;margin:8px 0 4px;white-space:pre-wrap;}
+.emp-note-wrap{margin:14px 0 6px;}
+.emp-note-label{font-size:10.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--accent-dark);margin-bottom:5px;}
+.emp-note{font-size:12.5px;color:var(--ink);line-height:1.6;white-space:pre-wrap;background:var(--canvas-2);border-left:3px solid var(--accent);border-radius:9px;padding:10px 13px;}
 .emp-log-toggle{
   display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;margin-top:12px;
   background:var(--canvas-2);border:1px solid var(--line-soft);border-radius:11px;padding:9px 13px;
@@ -284,16 +291,17 @@ main{flex:1;min-width:0;padding:30px 34px 60px;}
 .emp-log-toggle:hover{border-color:var(--accent);color:var(--accent-dark);}
 .emp-log-toggle .chev{transition:transform .15s ease;font-size:10px;color:var(--muted);}
 .emp-log-toggle.open .chev{transform:rotate(180deg);}
-.emp-log-list{display:none;flex-direction:column;gap:9px;margin-top:11px;}
+.emp-log-list{display:none;flex-direction:column;gap:12px;margin-top:12px;}
 .emp-log-list.open{display:flex;}
-.emp-log-item{border:1.5px solid var(--line);border-radius:13px;padding:11px 13px;background:var(--canvas-2);position:relative;}
-.emp-log-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;}
-.emp-log-title{font-size:13px;font-weight:600;color:var(--ink);line-height:1.4;overflow-wrap:break-word;}
-.emp-log-date{font-size:10.5px;color:var(--muted);margin-top:2px;}
-.emp-log-reason{font-size:11.5px;color:var(--muted);margin-top:6px;line-height:1.5;white-space:pre-wrap;}
-.emp-log-reason b{color:var(--ink);}
-.emp-log-note{font-size:11.5px;color:var(--muted);margin-top:5px;line-height:1.5;white-space:pre-wrap;}
-.emp-log-actions{display:flex;gap:5px;margin-top:8px;}
+.emp-log-item{border:1.5px solid var(--line);border-radius:14px;padding:15px 16px;background:var(--white);position:relative;}
+.emp-log-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;padding-bottom:11px;border-bottom:1px solid var(--line-soft);}
+.emp-log-title{font-size:13.5px;font-weight:700;color:var(--ink);line-height:1.4;overflow-wrap:break-word;}
+.emp-log-date{font-size:11px;color:var(--muted);margin-top:3px;display:flex;align-items:center;gap:5px;}
+.emp-log-reason{font-size:12px;color:var(--ink);margin-top:11px;line-height:1.6;white-space:pre-wrap;background:var(--accent-soft);border-radius:9px;padding:9px 12px;}
+.emp-log-reason b{color:var(--accent-dark);display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.03em;margin-bottom:3px;}
+.emp-log-note{font-size:12px;color:var(--ink);margin-top:9px;line-height:1.6;white-space:pre-wrap;background:#FFF7E6;border-radius:9px;padding:9px 12px;border-left:3px solid var(--sedang);}
+.emp-log-note b{color:#9A6B00;display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.03em;margin-bottom:3px;}
+.emp-log-actions{display:flex;gap:6px;margin-top:11px;}
 .emp-empty-log{font-size:12px;color:var(--muted);text-align:center;padding:14px 8px;}
 .btn-add-log{
   width:100%;justify-content:center;background:var(--white);color:var(--accent-dark);
@@ -618,6 +626,11 @@ main{flex:1;min-width:0;padding:30px 34px 60px;}
     </div>
 
     <div class="emp-wrap" id="empCard" style="display:none;">
+      <div class="emp-export-bar" id="empExportBar" style="display:none;">
+        <label><input type="checkbox" id="empSelectAllChk" class="emp-select-checkbox">Pilih Semua</label>
+        <span class="cnt" id="empSelectedCount">0 karyawan dipilih</span>
+        <button type="button" class="btn btn-ghost" id="btnExportEmpPdf">🧾 Ekspor ke PDF</button>
+      </div>
       <div id="empList"></div>
       <div class="agenda-empty" id="empEmpty" style="display:none;">Belum ada anak baru yang dipantau. Klik "＋ Tambah Karyawan" di atas untuk mulai.</div>
     </div>
@@ -1158,6 +1171,7 @@ let editingEmpId = null;
 let editingLogId = null;
 let openLogEmpId = null;   // id karyawan yang drawer form log-nya lagi kebuka
 let expandedEmpIds = new Set(); // kartu karyawan yang log-nya lagi dibuka
+let selectedEmpIds = new Set(); // kartu karyawan yang dicentang untuk diekspor ke PDF
 let deletingKind = 'task'; // 'task' | 'eval' | 'employee' | 'log' — dipakai modal konfirmasi hapus
 let today = new Date();
 let viewYear = today.getFullYear();
@@ -1647,9 +1661,12 @@ function empProgressStats(empId){
 function renderKaryawanView(){
   const wrap = document.getElementById('empList');
   const emptyEl = document.getElementById('empEmpty');
+  // Buang seleksi untuk karyawan yang sudah tidak ada lagi
+  Array.from(selectedEmpIds).forEach(id=>{ if (!EMPLOYEES.some(e=>e.id===id)) selectedEmpIds.delete(id); });
   if (!EMPLOYEES.length){
     wrap.innerHTML = '';
     emptyEl.style.display = 'block';
+    updateEmpExportBar();
     return;
   }
   emptyEl.style.display = 'none';
@@ -1666,12 +1683,12 @@ function renderKaryawanView(){
         <div class="emp-log-top">
           <div>
             <div class="emp-log-title">${esc(l.tugas)}</div>
-            <div class="emp-log-date">${esc(l.tanggal||'')}</div>
+            <div class="emp-log-date">🗓️ ${esc(l.tanggal||'')}</div>
           </div>
           <span class="status-badge" style="background:${STATUS_COLOR[l.progress]||'#94A3B8'};flex-shrink:0;">${esc(l.progress||'Belum')}</span>
         </div>
-        ${l.alasan ? `<div class="emp-log-reason"><b>Alasan/tujuan:</b> ${esc(l.alasan)}</div>` : ''}
-        ${l.catatan ? `<div class="emp-log-note">${esc(l.catatan)}</div>` : ''}
+        ${l.alasan ? `<div class="emp-log-reason"><b>Alasan / Tujuan</b>${esc(l.alasan)}</div>` : ''}
+        ${l.catatan ? `<div class="emp-log-note"><b>Catatan Tambahan</b>${esc(l.catatan)}</div>` : ''}
         <div class="emp-log-actions">
           <button class="mini-btn" data-editlog="${esc(l.id)}">✏️ Edit</button>
           <button class="mini-btn danger" data-dellog="${esc(l.id)}">🗑️ Hapus</button>
@@ -1682,19 +1699,21 @@ function renderKaryawanView(){
       <div class="emp-card" data-empid="${esc(m.id)}">
         <div class="emp-card-top">
           <div class="emp-name-row">
+            <input type="checkbox" class="emp-select-checkbox" title="Pilih untuk ekspor PDF" data-empselect="${esc(m.id)}" ${selectedEmpIds.has(m.id)?'checked':''}>
             <div class="emp-avatar">${esc(initials||'?')}</div>
             <div>
               <div class="emp-name">${esc(m.nama)}</div>
               <div class="emp-meta">
-                <span>${esc(m.posisi||'—')}</span>
-                <span>${esc(m.divisi||'—')}</span>
-                <span>Mulai ${esc(m.tanggalMulai||'—')}${hari!==null ? ' · hari ke-' + (hari+1) : ''}</span>
+                <span>💼 ${esc(m.posisi||'—')}</span>
+                <span>🏷️ ${esc(m.divisi||'—')}</span>
+                <span>📅 Mulai ${esc(m.tanggalMulai||'—')}${hari!==null ? ' · hari ke-' + (hari+1) : ''}</span>
               </div>
             </div>
           </div>
           <div style="display:flex;align-items:flex-start;gap:8px;">
             <span class="status-badge" style="background:${EMP_STATUS_COLOR[m.status]||'#94A3B8'};">${esc(m.status||'Onboarding')}</span>
             <div class="emp-actions">
+              <button class="icon-btn" title="Ekspor PDF karyawan ini" data-exportone="${esc(m.id)}">📄</button>
               <button class="icon-btn" title="Salin ringkasan laporan" data-report="${esc(m.id)}">📋</button>
               <button class="icon-btn" title="Edit profil" data-editemp="${esc(m.id)}">✏️</button>
               <button class="icon-btn danger" title="Hapus" data-delemp="${esc(m.id)}">🗑️</button>
@@ -1705,7 +1724,7 @@ function renderKaryawanView(){
           <div class="emp-progress-bar"><div class="emp-progress-fill" style="width:${stats.pct}%;"></div></div>
           <div class="emp-progress-text">${stats.done}/${stats.total} tugas selesai (${stats.pct}%)</div>
         </div>
-        ${m.catatan ? `<div class="emp-note">${esc(m.catatan)}</div>` : ''}
+        ${m.catatan ? `<div class="emp-note-wrap"><div class="emp-note-label">📝 Catatan Umum</div><div class="emp-note">${esc(m.catatan)}</div></div>` : ''}
         <div class="emp-log-toggle ${isOpen?'open':''}" data-toggle="${esc(m.id)}">
           <span>📋 Log Tugas &amp; Progress (${logs.length})</span>
           <span class="chev">▾</span>
@@ -1729,6 +1748,105 @@ function renderKaryawanView(){
   });
   wrap.querySelectorAll('[data-dellog]').forEach(b=> b.onclick = ()=> confirmDeleteLog(b.dataset.dellog));
   wrap.querySelectorAll('[data-report]').forEach(b=> b.onclick = ()=> copyEmpReport(b.dataset.report));
+  wrap.querySelectorAll('[data-empselect]').forEach(cb=> cb.onchange = ()=>{
+    const id = cb.dataset.empselect;
+    if (cb.checked) selectedEmpIds.add(id); else selectedEmpIds.delete(id);
+    updateEmpExportBar();
+  });
+  wrap.querySelectorAll('[data-exportone]').forEach(b=> b.onclick = ()=> exportEmployeesToPDF([b.dataset.exportone]));
+
+  updateEmpExportBar();
+}
+
+/* ---- Ekspor karyawan (satu atau beberapa yang dipilih) ke PDF ---- */
+function updateEmpExportBar(){
+  const bar = document.getElementById('empExportBar');
+  if (!bar) return;
+  if (!EMPLOYEES.length){ bar.style.display = 'none'; return; }
+  bar.style.display = '';
+  document.getElementById('empSelectedCount').textContent = selectedEmpIds.size + ' karyawan dipilih';
+  const allChk = document.getElementById('empSelectAllChk');
+  allChk.checked = EMPLOYEES.length>0 && selectedEmpIds.size === EMPLOYEES.length;
+  const exportBtn = document.getElementById('btnExportEmpPdf');
+  exportBtn.disabled = selectedEmpIds.size === 0;
+  exportBtn.style.opacity = selectedEmpIds.size === 0 ? '.5' : '1';
+}
+document.getElementById('empSelectAllChk').onchange = (e)=>{
+  if (e.target.checked) selectedEmpIds = new Set(EMPLOYEES.map(m=>m.id));
+  else selectedEmpIds.clear();
+  renderKaryawanView();
+};
+document.getElementById('btnExportEmpPdf').onclick = ()=>{
+  if (!selectedEmpIds.size){ toast('Pilih dulu minimal 1 karyawan untuk diekspor'); return; }
+  exportEmployeesToPDF(Array.from(selectedEmpIds));
+};
+
+function exportEmployeesToPDF(ids){
+  const list = EMPLOYEES.filter(m=> ids.includes(m.id));
+  if (!list.length){ toast('Karyawan tidak ditemukan'); return; }
+  const win = window.open('', '_blank');
+  if (!win){ toast('❌ Popup diblokir browser, izinkan popup untuk ekspor PDF lalu coba lagi'); return; }
+
+  const sections = list.map(m=>{
+    const stats = empProgressStats(m.id);
+    const hari = daysSince(m.tanggalMulai);
+    const logs = empLogsFor(m.id).slice().sort((a,b)=> (a.tanggal||'').localeCompare(b.tanggal||''));
+    const logsRows = logs.length ? logs.map(l=>`
+      <tr>
+        <td>${esc(l.tanggal||'-')}</td>
+        <td>${esc(l.tugas)}</td>
+        <td>${esc(l.progress||'Belum')}</td>
+        <td>${esc(l.alasan||'-')}</td>
+        <td>${esc(l.catatan||'-')}</td>
+      </tr>`).join('') : '<tr><td colspan="5" style="text-align:center;color:#888;">Belum ada log tugas</td></tr>';
+
+    return `
+      <div class="emp-print-block">
+        <h2>${esc(m.nama)}</h2>
+        <table class="meta-table">
+          <tr><td>Posisi</td><td>${esc(m.posisi||'-')}</td></tr>
+          <tr><td>Divisi</td><td>${esc(m.divisi||'-')}</td></tr>
+          <tr><td>Tanggal Mulai</td><td>${esc(m.tanggalMulai||'-')}${hari!==null ? ' (hari ke-' + (hari+1) + ')' : ''}</td></tr>
+          <tr><td>Status</td><td>${esc(m.status||'-')}</td></tr>
+          <tr><td>Progress</td><td>${stats.done}/${stats.total} tugas selesai (${stats.pct}%)</td></tr>
+          ${m.catatan ? `<tr><td>Catatan Umum</td><td>${esc(m.catatan)}</td></tr>` : ''}
+        </table>
+        <h3>Log Tugas &amp; Progress</h3>
+        <table class="log-table">
+          <thead><tr><th>Tanggal</th><th>Tugas</th><th>Progress</th><th>Alasan/Tujuan</th><th>Catatan</th></tr></thead>
+          <tbody>${logsRows}</tbody>
+        </table>
+      </div>`;
+  }).join('<div class="page-break"></div>');
+
+  const now = new Date();
+  const genDate = now.getDate() + ' ' + BULAN[now.getMonth()] + ' ' + now.getFullYear();
+
+  win.document.write(`<!DOCTYPE html><html lang="id"><head><meta charset="UTF-8">
+    <title>Laporan Karyawan Baru</title>
+    <style>
+      body{font-family:Arial,Helvetica,sans-serif;color:#16324A;padding:24px;font-size:13px;}
+      h1{font-size:18px;margin-bottom:4px;}
+      .sub{color:#6D859C;font-size:11.5px;margin-bottom:22px;}
+      .emp-print-block{margin-bottom:26px;}
+      h2{font-size:15px;background:#EAF2FA;padding:8px 12px;border-radius:8px;margin-bottom:10px;}
+      h3{font-size:12.5px;margin:14px 0 8px;color:#1F5FA8;}
+      table{width:100%;border-collapse:collapse;margin-bottom:6px;}
+      .meta-table td{padding:5px 8px;border-bottom:1px solid #EAF1F8;font-size:12px;}
+      .meta-table td:first-child{width:150px;font-weight:700;color:#6D859C;}
+      .log-table th,.log-table td{border:1px solid #DBE7F2;padding:6px 8px;font-size:11px;text-align:left;vertical-align:top;}
+      .log-table th{background:#F8FBFD;}
+      .page-break{page-break-after:always;}
+      @media print{ body{padding:0;} }
+    </style>
+  </head><body>
+    <h1>🧑‍💼 Laporan Progress Karyawan Baru</h1>
+    <div class="sub">Dicetak ${genDate} · ${list.length} karyawan</div>
+    ${sections}
+  </body></html>`);
+  win.document.close();
+  win.focus();
+  setTimeout(()=>{ win.print(); }, 300);
 }
 
 function copyEmpReport(empId){

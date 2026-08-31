@@ -294,7 +294,6 @@ main{flex:1;min-width:0;padding:30px 34px 60px;}
 .emp-more-dropdown button.danger-item:hover{background:#FDEDEF;}
 .status-badge{
   font-size:10.5px;font-weight:700;padding:5px 12px;border-radius:20px;color:#fff;white-space:nowrap;
-  box-shadow:0 3px 8px rgba(15,58,92,.22), inset 0 1px 0 rgba(255,255,255,.3);
 }
 .emp-progress-wrap{display:flex;align-items:center;gap:12px;margin:12px 0 4px;}
 .emp-progress-bar{flex:1;height:8px;border-radius:20px;background:var(--canvas-2);border:1px solid var(--line-soft);overflow:hidden;}
@@ -305,37 +304,30 @@ main{flex:1;min-width:0;padding:30px 34px 60px;}
 .emp-note{font-size:12.5px;color:var(--ink);line-height:1.6;white-space:pre-wrap;background:var(--canvas-2);border-left:3px solid var(--accent);border-radius:9px;padding:10px 13px;}
 .emp-log-toggle{
   display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;margin-top:12px;
-  background:linear-gradient(160deg,#EAF3FC,#DCEAFA);border:1px solid rgba(45,125,210,.22);border-radius:12px;
-  padding:10px 14px;font-size:12px;font-weight:700;color:var(--accent-dark);
-  box-shadow:0 4px 12px rgba(31,95,168,.10), inset 0 1px 0 rgba(255,255,255,.6);
+  background:var(--canvas-2);border:1px solid var(--line-soft);border-radius:11px;
+  padding:9px 13px;font-size:12px;font-weight:700;color:var(--accent-dark);
 }
-.emp-log-toggle:hover{border-color:var(--accent);box-shadow:0 6px 16px rgba(31,95,168,.16), inset 0 1px 0 rgba(255,255,255,.6);}
+.emp-log-toggle:hover{border-color:var(--accent);}
 .emp-log-toggle .chev{transition:transform .15s ease;font-size:10px;color:var(--accent-dark);}
 .emp-log-toggle.open .chev{transform:rotate(180deg);}
-.emp-log-list{display:none;flex-direction:column;gap:14px;margin-top:14px;}
+.emp-log-list{display:none;flex-direction:column;gap:10px;margin-top:12px;}
 .emp-log-list.open{display:flex;}
 .emp-log-item{
-  border:1px solid rgba(45,125,210,.16);border-radius:16px;padding:17px 19px;
-  background:linear-gradient(180deg,#FFFFFF,#F6FAFE);position:relative;
-  box-shadow:0 10px 22px rgba(31,95,168,.10), 0 2px 5px rgba(31,95,168,.06);
+  border:1px solid var(--line-soft);border-radius:14px;padding:15px 17px;background:var(--white);
 }
-.emp-log-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;padding-bottom:12px;border-bottom:1px solid rgba(45,125,210,.14);}
-.emp-log-title{font-size:13.5px;font-weight:700;color:var(--navy-2);line-height:1.4;overflow-wrap:break-word;}
-.emp-log-date{font-size:11px;color:#5C87AC;margin-top:3px;display:flex;align-items:center;gap:5px;}
+.emp-log-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;padding-bottom:10px;border-bottom:1px solid var(--line-soft);}
+.emp-log-title{font-size:13.5px;font-weight:700;color:var(--ink);line-height:1.4;overflow-wrap:break-word;}
+.emp-log-date{font-size:11px;color:var(--muted);margin-top:3px;display:flex;align-items:center;gap:5px;}
 .emp-log-reason{
   font-size:12px;color:var(--ink);margin-top:12px;line-height:1.6;white-space:pre-wrap;
-  background:linear-gradient(135deg,#EAF3FC,#DCEAFA);border:1px solid rgba(45,125,210,.14);
-  border-radius:11px;padding:10px 13px;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.7), 0 2px 6px rgba(31,95,168,.05);
+  border-left:2px solid var(--accent);padding-left:11px;
 }
-.emp-log-reason b{color:var(--accent-dark);display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.03em;margin-bottom:4px;}
+.emp-log-reason b{color:var(--accent-dark);display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;margin-bottom:3px;}
 .emp-log-note{
-  font-size:12px;color:var(--ink);margin-top:10px;line-height:1.6;white-space:pre-wrap;
-  background:linear-gradient(135deg,#F1F7FD,#E1EDFA);border:1px solid rgba(45,125,210,.12);
-  border-left:3px solid var(--navy-3);border-radius:11px;padding:10px 13px;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.7), 0 2px 6px rgba(31,95,168,.05);
+  font-size:12px;color:var(--ink);margin-top:11px;line-height:1.6;white-space:pre-wrap;
+  border-left:2px solid var(--line);padding-left:11px;
 }
-.emp-log-note b{color:var(--navy-2);display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.03em;margin-bottom:4px;}
+.emp-log-note b{color:var(--muted);display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;margin-bottom:3px;}
 .emp-log-actions{display:flex;gap:6px;margin-top:12px;}
 .emp-empty-log{font-size:12px;color:var(--muted);text-align:center;padding:14px 8px;}
 .btn-add-log{

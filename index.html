@@ -246,7 +246,7 @@ main{flex:1;min-width:0;padding:30px 34px 60px;}
 .cal-badge > *{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;}
 .cal-more{font-size:10px;color:var(--muted);font-weight:600;padding-left:2px;}
 
-/* ===== Evaluasi Mingguan (What / So What / Now What) ===== */
+/* ===== Catatan Mingguan ===== */
 .eval-card{background:var(--white);border-radius:20px;box-shadow:var(--shadow);border:1px solid var(--line-soft);padding:18px 20px;max-height:calc(100vh - 260px);overflow-y:auto;}
 .eval-week-group{margin-bottom:20px;}
 .eval-week-group:last-child{margin-bottom:0;}
@@ -256,10 +256,8 @@ main{flex:1;min-width:0;padding:30px 34px 60px;}
 .eval-entry{border:1.5px solid var(--line);border-radius:14px;padding:14px 15px;margin-bottom:10px;background:var(--canvas-2);}
 .eval-entry:last-child{margin-bottom:0;}
 .eval-entry-top{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:11px;}
-.eval-wswn{display:flex;flex-direction:column;gap:8px;margin-bottom:10px;}
-.eval-wswn .row{display:flex;gap:10px;align-items:flex-start;}
-.eval-wswn .lbl{flex-shrink:0;width:78px;font-size:10px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--accent-dark);padding-top:2px;}
-.eval-wswn .txt{font-size:12.5px;color:var(--ink);line-height:1.55;white-space:pre-wrap;flex:1;overflow-wrap:break-word;}
+.eval-wswn{margin-bottom:10px;}
+.eval-wswn .txt{font-size:12.5px;color:var(--ink);line-height:1.55;white-space:pre-wrap;overflow-wrap:break-word;}
 .eval-meta-row{display:flex;gap:14px;flex-wrap:wrap;font-size:11.5px;color:var(--muted);margin-bottom:10px;}
 
 @media (max-width:920px){
@@ -526,7 +524,7 @@ main{flex:1;min-width:0;padding:30px 34px 60px;}
           <button class="vt-btn active" id="btnViewChecklist" type="button">✅ Checklist Harian</button>
           <button class="vt-btn" id="btnViewCalendar" type="button">🗓️ Kalender</button>
           <button class="vt-btn" id="btnViewList" type="button">📋 List Harian</button>
-          <button class="vt-btn" id="btnViewEval" type="button">📝 Evaluasi Mingguan</button>
+          <button class="vt-btn" id="btnViewEval" type="button">📝 Catatan</button>
         </div>
         <div class="search-box">🔍<input id="searchInput" type="text" placeholder="Cari tugas..."></div>
         <button class="btn btn-primary" id="btnAddToday">＋ Tambah Tugas</button>
@@ -573,7 +571,7 @@ main{flex:1;min-width:0;padding:30px 34px 60px;}
 
     <div class="eval-card" id="evalCard" style="display:none;">
       <div id="evalList"></div>
-      <div class="agenda-empty" id="evalEmpty" style="display:none;">Belum ada catatan evaluasi. Klik "＋ Tambah Evaluasi" di atas untuk mulai catat mingguan (What → So What → Now What) per divisi.</div>
+      <div class="agenda-empty" id="evalEmpty" style="display:none;">Belum ada catatan. Klik "＋ Tambah Catatan" di atas untuk mulai catat mingguan per divisi.</div>
     </div>
   </main>
 </div>
@@ -636,14 +634,14 @@ main{flex:1;min-width:0;padding:30px 34px 60px;}
   <div class="drawer">
     <div class="drawer-head">
       <div>
-        <div class="dtitle" id="evalDrawerTitle">📝 Evaluasi Mingguan</div>
-        <div class="dsub">Struktur What → So What → Now What</div>
+        <div class="dtitle" id="evalDrawerTitle">📝 Catatan</div>
+        <div class="dsub">Catatan mingguan</div>
       </div>
       <button class="drawer-close" id="evalDrawerClose">✕</button>
     </div>
     <div class="drawer-body">
       <div class="form-block" style="border-top:none;padding-top:0;margin-top:0;">
-        <div class="ftitle" id="evalFormTitle">➕ Tambah Evaluasi Baru</div>
+        <div class="ftitle" id="evalFormTitle">➕ Tambah Catatan Baru</div>
         <form id="evalForm">
           <input type="hidden" id="eId">
           <div class="field">
@@ -651,37 +649,13 @@ main{flex:1;min-width:0;padding:30px 34px 60px;}
             <input type="date" id="eTanggal" required>
           </div>
           <div class="field">
-            <label>Divisi</label>
-            <select id="eDivisi"></select>
-          </div>
-          <div class="field">
-            <label>What — apa yang terjadi? (fakta/angka, tanpa opini)</label>
-            <textarea id="eWhat" placeholder="mis. Spending harian di bawah target sekitar 40%" required></textarea>
-          </div>
-          <div class="field">
-            <label>So What — kenapa penting, apa dampak/sebabnya?</label>
-            <textarea id="eSoWhat" placeholder="mis. Akun & pixel baru masih fase testing, kalau dibiarkan target bulanan bisa meleset"></textarea>
-          </div>
-          <div class="field">
-            <label>Now What — langkah konkret & penanggung jawab</label>
-            <textarea id="eNowWhat" placeholder="mis. Set milestone 2 minggu, evaluasi ulang strategi bila belum ketemu winning ad"></textarea>
-          </div>
-          <div class="field">
-            <label>PIC (opsional)</label>
-            <input type="text" id="ePic" placeholder="mis. Media Buyer / Nama">
-          </div>
-          <div class="field">
-            <label>Tenggat tindak lanjut (opsional)</label>
-            <input type="date" id="eTenggat">
-          </div>
-          <div class="field">
-            <label>Status</label>
-            <div class="choice-group" id="evalStatusChoice"></div>
+            <label>Catatan</label>
+            <textarea id="eWhat" placeholder="Tulis catatan bebas untuk minggu ini..." required></textarea>
           </div>
           <div id="evalFormMsg" class="msg-line"></div>
           <div class="form-actions">
             <button type="button" class="btn btn-ghost" id="btnCancelEvalForm">Batal</button>
-            <button type="submit" class="btn btn-primary" id="btnSaveEvalForm">Tambah Evaluasi</button>
+            <button type="submit" class="btn btn-primary" id="btnSaveEvalForm">Tambah Catatan</button>
           </div>
         </form>
       </div>
@@ -705,7 +679,7 @@ main{flex:1;min-width:0;padding:30px 34px 60px;}
     <div class="msg-line" id="settingsMsg"></div>
 
     <div class="modal-section-title">📄 Kode Backend (Code.gs)</div>
-    <div class="msub" style="margin-bottom:0;">Belum punya Web App? Buat Google Sheet baru → Extensions → Apps Script → hapus isi default → tempel kode di bawah → Deploy → New deployment → Web app (Execute as: Me, Who has access: Anyone) → salin URL-nya ke kolom di atas. Sheet "ToDo" (tugas harian) dan "Evaluasi Mingguan" (catatan What/So What/Now What) akan dibuat otomatis, dua-duanya di spreadsheet yang sama.</div>
+    <div class="msub" style="margin-bottom:0;">Belum punya Web App? Buat Google Sheet baru → Extensions → Apps Script → hapus isi default → tempel kode di bawah → Deploy → New deployment → Web app (Execute as: Me, Who has access: Anyone) → salin URL-nya ke kolom di atas. Sheet "ToDo" (tugas harian) dan "Evaluasi Mingguan" (catatan bebas per tanggal) akan dibuat otomatis, dua-duanya di spreadsheet yang sama.</div>
     <pre class="code-box" id="codeGsBox"></pre>
     <button type="button" class="btn btn-ghost" id="btnCopyCode" style="width:100%;justify-content:center;margin-top:9px;">📋 Salin Kode Code.gs</button>
 
@@ -789,7 +763,7 @@ var SHEET_NAME = 'ToDo';
 var HEADERS = ['ID','TanggalDibuat','Kategori','Prioritas','Tugas','Deadline','Status','Catatan'];
 
 var EVAL_SHEET_NAME = 'Evaluasi Mingguan';
-var EVAL_HEADERS = ['ID','Tanggal','Divisi','What','SoWhat','NowWhat','PIC','Tenggat','Status'];
+var EVAL_HEADERS = ['ID','Tanggal','Catatan'];
 
 function getSheet_(){
   var ss = SpreadsheetApp.getActiveSpreadsheet();
@@ -900,11 +874,11 @@ function deleteTask_(sh, data){
   }
 }
 
-// Upsert catatan evaluasi mingguan (What / So What / Now What) berdasarkan ID
+// Upsert catatan mingguan berdasarkan ID
 function upsertEval_(sh, data){
   var rows = sh.getDataRange().getValues();
   var id = String(data.id).trim();
-  var rowValues = [data.id, data.tanggal, data.divisi, data.what, data.sowhat, data.nowwhat, data.pic, data.tenggat, data.status];
+  var rowValues = [data.id, data.tanggal, data.what];
   for (var i = 1; i < rows.length; i++){
     if (String(rows[i][0]).trim() === id){
       sh.getRange(i + 1, 1, 1, EVAL_HEADERS.length).setValues([rowValues]);
@@ -1192,7 +1166,7 @@ function renderAgenda(){
   });
 }
 
-/* ============ EVALUASI MINGGUAN (What / So What / Now What) ============ */
+/* ============ CATATAN MINGGUAN ============ */
 // Ambil info minggu ISO (Senin–Minggu) dari sebuah tanggal, buat pengelompokan per minggu.
 function getISOWeekInfo(dateStr){
   const d = dateStr ? parseISO(dateStr) : new Date();
@@ -1241,21 +1215,11 @@ function renderEvalView(){
     const rows = items.map(ev=>`
       <div class="eval-entry" data-id="${esc(ev.id)}">
         <div class="eval-entry-top">
-          <div style="display:flex;gap:6px;flex-wrap:wrap;">
-            <span class="tag tag-soft">${esc(ev.divisi||'Lainnya')}</span>
-            <span class="tag tag-solid" style="background:${STATUS_COLOR[ev.status]||'#94A3B8'}">${esc(ev.status||'Belum')}</span>
-          </div>
           <div style="font-size:11px;color:var(--muted);">${esc(ev.tanggal||'')}</div>
         </div>
         <div class="eval-wswn">
-          <div class="row"><div class="lbl">What</div><div class="txt">${esc(ev.what||'—')}</div></div>
-          <div class="row"><div class="lbl">So What</div><div class="txt">${esc(ev.sowhat||'—')}</div></div>
-          <div class="row"><div class="lbl">Now What</div><div class="txt">${esc(ev.nowwhat||'—')}</div></div>
+          <div class="txt">${esc(ev.what||'—')}</div>
         </div>
-        ${(ev.pic || ev.tenggat) ? `<div class="eval-meta-row">
-          ${ev.pic?`<span>👤 ${esc(ev.pic)}</span>`:''}
-          ${ev.tenggat?`<span>⏳ Tenggat ${esc(ev.tenggat)}</span>`:''}
-        </div>` : ''}
         <div class="ticket-actions">
           <button class="mini-btn" data-editeval="${esc(ev.id)}">✏️ Edit</button>
           <button class="mini-btn danger" data-deleval="${esc(ev.id)}">🗑️ Hapus</button>
@@ -1275,41 +1239,24 @@ function renderEvalView(){
   wrap.querySelectorAll('[data-deleval]').forEach(b=> b.onclick = ()=> confirmDeleteEval(b.dataset.deleval));
 }
 
-function populateDivisiSelect(selected){
-  document.getElementById('eDivisi').innerHTML = DIVISI_LIST.map(k=>
-    `<option value="${esc(k)}" ${k===selected?'selected':''}>${esc(k)}</option>`
-  ).join('');
-}
 function resetEvalFormFields(){
   editingEvalId = null;
-  document.getElementById('evalFormTitle').textContent = '➕ Tambah Evaluasi Baru';
-  document.getElementById('btnSaveEvalForm').textContent = 'Tambah Evaluasi';
+  document.getElementById('evalFormTitle').textContent = '➕ Tambah Catatan Baru';
+  document.getElementById('btnSaveEvalForm').textContent = 'Tambah Catatan';
   document.getElementById('eId').value = '';
   document.getElementById('eTanggal').value = todayISO();
-  populateDivisiSelect(DIVISI_LIST[0]);
   document.getElementById('eWhat').value = '';
-  document.getElementById('eSoWhat').value = '';
-  document.getElementById('eNowWhat').value = '';
-  document.getElementById('ePic').value = '';
-  document.getElementById('eTenggat').value = '';
-  renderChoiceGroup('evalStatusChoice', STATUS_LIST, STATUS_COLOR, 'Belum');
   document.getElementById('evalFormMsg').textContent = '';
 }
 function fillEvalFormForEdit(id){
   const ev = EVALS.find(x=>x.id===id);
   if (!ev) return;
   editingEvalId = id;
-  document.getElementById('evalFormTitle').textContent = '✏️ Edit Evaluasi';
+  document.getElementById('evalFormTitle').textContent = '✏️ Edit Catatan';
   document.getElementById('btnSaveEvalForm').textContent = 'Simpan Perubahan';
   document.getElementById('eId').value = ev.id;
   document.getElementById('eTanggal').value = ev.tanggal || todayISO();
-  populateDivisiSelect(ev.divisi);
   document.getElementById('eWhat').value = ev.what || '';
-  document.getElementById('eSoWhat').value = ev.sowhat || '';
-  document.getElementById('eNowWhat').value = ev.nowwhat || '';
-  document.getElementById('ePic').value = ev.pic || '';
-  document.getElementById('eTenggat').value = ev.tenggat || '';
-  renderChoiceGroup('evalStatusChoice', STATUS_LIST, STATUS_COLOR, ev.status || 'Belum');
   document.getElementById('evalFormMsg').textContent = '';
 }
 function openEvalDrawer(id){
@@ -1325,32 +1272,25 @@ document.getElementById('evalForm').addEventListener('submit', function(e){
   e.preventDefault();
   const what = document.getElementById('eWhat').value.trim();
   const msgEl = document.getElementById('evalFormMsg');
-  if (!what){ msgEl.textContent = 'Kolom "What" wajib diisi'; msgEl.style.color = '#E0546B'; return; }
+  if (!what){ msgEl.textContent = 'Kolom "Catatan" wajib diisi'; msgEl.style.color = '#E0546B'; return; }
 
   const tanggal = document.getElementById('eTanggal').value || todayISO();
-  const divisi = document.getElementById('eDivisi').value;
-  const sowhat = document.getElementById('eSoWhat').value.trim();
-  const nowwhat = document.getElementById('eNowWhat').value.trim();
-  const pic = document.getElementById('ePic').value.trim();
-  const tenggat = document.getElementById('eTenggat').value;
-  const status = document.getElementById('evalStatusChoice').dataset.selected || 'Belum';
   lastLocalEditAt = Date.now();
 
   let ev;
   if (editingEvalId){
     ev = EVALS.find(x=>x.id===editingEvalId);
-    ev.tanggal = tanggal; ev.divisi = divisi; ev.what = what; ev.sowhat = sowhat;
-    ev.nowwhat = nowwhat; ev.pic = pic; ev.tenggat = tenggat; ev.status = status;
-    toast('Evaluasi diperbarui');
+    ev.tanggal = tanggal; ev.what = what;
+    toast('Catatan diperbarui');
   } else {
-    ev = { id: genEvalId(), tanggal, divisi, what, sowhat, nowwhat, pic, tenggat, status };
+    ev = { id: genEvalId(), tanggal, what };
     EVALS.push(ev);
-    toast('Evaluasi ditambahkan');
+    toast('Catatan ditambahkan');
   }
   saveEvalLocalCache();
   renderEvalView();
   closeEvalDrawer();
-  pushToSheet({ type:'upsert', sheet:'eval', id:ev.id, tanggal:ev.tanggal, divisi:ev.divisi, what:ev.what, sowhat:ev.sowhat, nowwhat:ev.nowwhat, pic:ev.pic, tenggat:ev.tenggat, status:ev.status });
+  pushToSheet({ type:'upsert', sheet:'eval', id:ev.id, tanggal:ev.tanggal, what:ev.what });
 });
 document.getElementById('btnCancelEvalForm').onclick = closeEvalDrawer;
 document.getElementById('evalDrawerClose').onclick = closeEvalDrawer;
@@ -1362,7 +1302,7 @@ function confirmDeleteEval(id){
   if (!ev) return;
   deletingId = id;
   deletingKind = 'eval';
-  document.getElementById('deleteMsub').textContent = 'Catatan evaluasi "' + (ev.what||'').slice(0,60) + '" akan dihapus permanen dari daftar dan spreadsheet.';
+  document.getElementById('deleteMsub').textContent = 'Catatan "' + (ev.what||'').slice(0,60) + '" akan dihapus permanen dari daftar dan spreadsheet.';
   document.getElementById('deleteOverlay').classList.add('open');
 }
 
@@ -1377,7 +1317,7 @@ function setViewMode(mode){
   document.getElementById('btnViewChecklist').classList.toggle('active', mode === 'checklist');
   document.getElementById('btnViewEval').classList.toggle('active', mode === 'evaluasi');
   const addBtn = document.getElementById('btnAddToday');
-  if (addBtn) addBtn.textContent = mode === 'evaluasi' ? '＋ Tambah Evaluasi' : '＋ Tambah Tugas';
+  if (addBtn) addBtn.textContent = mode === 'evaluasi' ? '＋ Tambah Catatan' : '＋ Tambah Tugas';
   if (mode === 'list') renderAgenda();
   if (mode === 'checklist') renderChecklist();
   if (mode === 'evaluasi') renderEvalView();
@@ -1887,7 +1827,7 @@ document.getElementById('btnConfirmDelete').onclick = ()=>{
     saveEvalLocalCache();
     renderEvalView();
     pushToSheet({ type:'delete', sheet:'eval', id:deletingId });
-    toast('Evaluasi dihapus');
+    toast('Catatan dihapus');
   } else {
     TASKS = TASKS.filter(t=>t.id!==deletingId);
     saveLocalCache();
@@ -1937,7 +1877,7 @@ document.getElementById('dayOverlay').addEventListener('click', (e)=>{
 
 /* ============ SETTINGS MODAL ============ */
 document.getElementById('btnSettings').onclick = ()=>{
-  document.getElementById('localDataInfo').textContent = TASKS.length + ' tugas & ' + EVALS.length + ' catatan evaluasi tersimpan di perangkat ini.';
+  document.getElementById('localDataInfo').textContent = TASKS.length + ' tugas & ' + EVALS.length + ' catatan tersimpan di perangkat ini.';
   renderKategoriManageList();
   document.getElementById('settingsOverlay').classList.add('open');
 };
@@ -1976,7 +1916,7 @@ document.getElementById('btnClearLocal').onclick = ()=>{
   saveLocalCache();
   saveEvalLocalCache();
   refreshAll();
-  document.getElementById('localDataInfo').textContent = '0 tugas & 0 catatan evaluasi tersimpan di perangkat ini.';
+  document.getElementById('localDataInfo').textContent = '0 tugas & 0 catatan tersimpan di perangkat ini.';
   toast('Data lokal dihapus');
 };
 
@@ -2052,13 +1992,7 @@ async function pullFromSheet(silent){
     EVALS = (json.evals || []).map(r=>({
       id: String(r.id || '').trim(),
       tanggal: String(r.tanggal || '').trim(),
-      divisi: String(r.divisi || '').trim() || 'Lainnya',
-      what: String(r.what || '').trim(),
-      sowhat: String(r.sowhat || '').trim(),
-      nowwhat: String(r.nowwhat || '').trim(),
-      pic: String(r.pic || '').trim(),
-      tenggat: String(r.tenggat || '').trim(),
-      status: String(r.status || '').trim() || 'Belum'
+      what: String(r.what || r.catatan || '').trim()
     })).filter(r=> r.id && r.what);
     saveEvalLocalCache();
     const now = new Date();

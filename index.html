@@ -260,6 +260,47 @@ main{flex:1;min-width:0;padding:30px 34px 60px;}
 .eval-wswn .txt{font-size:12.5px;color:var(--ink);line-height:1.55;white-space:pre-wrap;overflow-wrap:break-word;}
 .eval-meta-row{display:flex;gap:14px;flex-wrap:wrap;font-size:11.5px;color:var(--muted);margin-bottom:10px;}
 
+/* ===== Anak Baru (Onboarding) ===== */
+.emp-wrap{display:flex;flex-direction:column;gap:16px;max-height:calc(100vh - 260px);overflow-y:auto;padding-right:2px;}
+.emp-card{background:var(--white);border-radius:20px;box-shadow:var(--shadow);border:1px solid var(--line-soft);padding:20px 22px;}
+.emp-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px;}
+.emp-name-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.emp-avatar{width:40px;height:40px;border-radius:12px;background:var(--accent-soft);color:var(--accent-dark);
+  display:flex;align-items:center;justify-content:center;font-family:'Poppins',sans-serif;font-weight:700;font-size:15px;flex-shrink:0;}
+.emp-name{font-family:'Poppins',sans-serif;font-weight:700;font-size:15px;color:var(--ink);}
+.emp-meta{font-size:11.5px;color:var(--muted);margin-top:3px;display:flex;gap:10px;flex-wrap:wrap;}
+.emp-actions{display:flex;gap:6px;flex-shrink:0;}
+.status-badge{font-size:10.5px;font-weight:700;padding:4px 11px;border-radius:20px;color:#fff;white-space:nowrap;}
+.emp-progress-wrap{display:flex;align-items:center;gap:12px;margin:12px 0 4px;}
+.emp-progress-bar{flex:1;height:8px;border-radius:20px;background:var(--canvas-2);border:1px solid var(--line-soft);overflow:hidden;}
+.emp-progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--selesai));border-radius:20px;transition:width .25s ease;}
+.emp-progress-text{font-size:11px;font-weight:700;color:var(--muted);white-space:nowrap;}
+.emp-note{font-size:12px;color:var(--muted);line-height:1.5;margin:8px 0 4px;white-space:pre-wrap;}
+.emp-log-toggle{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;margin-top:12px;
+  background:var(--canvas-2);border:1px solid var(--line-soft);border-radius:11px;padding:9px 13px;
+  font-size:12px;font-weight:700;color:var(--ink);
+}
+.emp-log-toggle:hover{border-color:var(--accent);color:var(--accent-dark);}
+.emp-log-toggle .chev{transition:transform .15s ease;font-size:10px;color:var(--muted);}
+.emp-log-toggle.open .chev{transform:rotate(180deg);}
+.emp-log-list{display:none;flex-direction:column;gap:9px;margin-top:11px;}
+.emp-log-list.open{display:flex;}
+.emp-log-item{border:1.5px solid var(--line);border-radius:13px;padding:11px 13px;background:var(--canvas-2);position:relative;}
+.emp-log-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;}
+.emp-log-title{font-size:13px;font-weight:600;color:var(--ink);line-height:1.4;overflow-wrap:break-word;}
+.emp-log-date{font-size:10.5px;color:var(--muted);margin-top:2px;}
+.emp-log-reason{font-size:11.5px;color:var(--muted);margin-top:6px;line-height:1.5;white-space:pre-wrap;}
+.emp-log-reason b{color:var(--ink);}
+.emp-log-note{font-size:11.5px;color:var(--muted);margin-top:5px;line-height:1.5;white-space:pre-wrap;}
+.emp-log-actions{display:flex;gap:5px;margin-top:8px;}
+.emp-empty-log{font-size:12px;color:var(--muted);text-align:center;padding:14px 8px;}
+.btn-add-log{
+  width:100%;justify-content:center;background:var(--white);color:var(--accent-dark);
+  border:1.5px dashed var(--accent);box-shadow:none;margin-top:11px;font-size:12px;padding:9px 14px;
+}
+.btn-add-log:hover{background:var(--accent-soft);}
+
 @media (max-width:920px){
   .app{flex-direction:column;}
   .sidebar{width:100%;height:auto;position:relative;}
@@ -526,6 +567,7 @@ main{flex:1;min-width:0;padding:30px 34px 60px;}
           <button class="vt-btn" id="btnViewCalendar" type="button">🗓️ Kalender</button>
           <button class="vt-btn" id="btnViewList" type="button">📋 List Harian</button>
           <button class="vt-btn" id="btnViewEval" type="button">📝 Catatan</button>
+          <button class="vt-btn" id="btnViewKaryawan" type="button">🧑‍💼 Anak Baru</button>
         </div>
         <div class="search-box">🔍<input id="searchInput" type="text" placeholder="Cari tugas..."></div>
         <button class="btn btn-primary" id="btnAddToday">＋ Tambah Tugas</button>
@@ -573,6 +615,11 @@ main{flex:1;min-width:0;padding:30px 34px 60px;}
     <div class="eval-card" id="evalCard" style="display:none;">
       <div id="evalList"></div>
       <div class="agenda-empty" id="evalEmpty" style="display:none;">Belum ada catatan. Klik "＋ Tambah Catatan" di atas untuk mulai catat mingguan.</div>
+    </div>
+
+    <div class="emp-wrap" id="empCard" style="display:none;">
+      <div id="empList"></div>
+      <div class="agenda-empty" id="empEmpty" style="display:none;">Belum ada anak baru yang dipantau. Klik "＋ Tambah Karyawan" di atas untuk mulai.</div>
     </div>
   </main>
 </div>
@@ -664,6 +711,101 @@ main{flex:1;min-width:0;padding:30px 34px 60px;}
   </div>
 </div>
 
+<!-- ============ DRAWER KARYAWAN BARU ============ -->
+<div class="overlay" id="empOverlay">
+  <div class="drawer">
+    <div class="drawer-head">
+      <div>
+        <div class="dtitle" id="empDrawerTitle">🧑‍💼 Karyawan Baru</div>
+        <div class="dsub">Profil anak baru untuk dipantau</div>
+      </div>
+      <button class="drawer-close" id="empDrawerClose">✕</button>
+    </div>
+    <div class="drawer-body">
+      <div class="form-block" style="border-top:none;padding-top:0;margin-top:0;">
+        <form id="empForm">
+          <input type="hidden" id="mId">
+          <div class="field">
+            <label>Nama Karyawan</label>
+            <input type="text" id="mNama" placeholder="mis. Dinda Putri" required>
+          </div>
+          <div class="field">
+            <label>Posisi / Jabatan</label>
+            <input type="text" id="mPosisi" placeholder="mis. Content Creator Specialist">
+          </div>
+          <div class="field">
+            <label>Divisi</label>
+            <select id="mDivisi"></select>
+          </div>
+          <div class="field">
+            <label>Tanggal Mulai Kerja</label>
+            <input type="date" id="mTanggalMulai">
+          </div>
+          <div class="field">
+            <label>Status</label>
+            <div class="choice-group" id="empStatusChoice"></div>
+          </div>
+          <div class="field">
+            <label>Catatan Umum (opsional)</label>
+            <textarea id="mCatatan" placeholder="Kesan umum, hal yang perlu diperhatikan, dsb."></textarea>
+          </div>
+          <div id="empFormMsg" class="msg-line"></div>
+          <div class="form-actions">
+            <button type="button" class="btn btn-ghost" id="btnCancelEmpForm">Batal</button>
+            <button type="submit" class="btn btn-primary" id="btnSaveEmpForm">Tambah Karyawan</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ DRAWER LOG TUGAS KARYAWAN ============ -->
+<div class="overlay" id="logOverlay">
+  <div class="drawer">
+    <div class="drawer-head">
+      <div>
+        <div class="dtitle" id="logDrawerTitle">➕ Tambah Log Tugas</div>
+        <div class="dsub" id="logDrawerSub">Untuk —</div>
+      </div>
+      <button class="drawer-close" id="logDrawerClose">✕</button>
+    </div>
+    <div class="drawer-body">
+      <div class="form-block" style="border-top:none;padding-top:0;margin-top:0;">
+        <form id="logForm">
+          <input type="hidden" id="lId">
+          <input type="hidden" id="lEmpId">
+          <div class="field">
+            <label>Tanggal</label>
+            <input type="date" id="lTanggal" required>
+          </div>
+          <div class="field">
+            <label>Tugas / Kerjaan</label>
+            <input type="text" id="lTugas" placeholder="mis. Bikin 5 draft konten TikTok" required>
+          </div>
+          <div class="field">
+            <label>Alasan / Tujuan Tugas</label>
+            <textarea id="lAlasan" placeholder="Kenapa tugas ini diberikan, atau alasan progressnya begini"></textarea>
+          </div>
+          <div class="field">
+            <label>Progress</label>
+            <div class="choice-group" id="logProgressChoice"></div>
+          </div>
+          <div class="field">
+            <label>Catatan Tambahan (opsional)</label>
+            <textarea id="lCatatan" placeholder="Evaluasi, kendala, feedback, dsb."></textarea>
+          </div>
+          <div id="logFormMsg" class="msg-line"></div>
+          <div class="form-actions">
+            <button type="button" class="btn btn-ghost" id="btnCancelLogForm">Batal</button>
+            <button type="submit" class="btn btn-primary" id="btnSaveLogForm">Tambah Log</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ============ SETTINGS MODAL ============ -->
 <div class="modal-overlay" id="settingsOverlay">
   <div class="modal">
@@ -680,7 +822,7 @@ main{flex:1;min-width:0;padding:30px 34px 60px;}
     <div class="msg-line" id="settingsMsg"></div>
 
     <div class="modal-section-title">📄 Kode Backend (Code.gs)</div>
-    <div class="msub" style="margin-bottom:0;">Belum punya Web App? Buat Google Sheet baru → Extensions → Apps Script → hapus isi default → tempel kode di bawah → Deploy → New deployment → Web app (Execute as: Me, Who has access: Anyone) → salin URL-nya ke kolom di atas. Sheet "ToDo" (tugas harian) dan "Evaluasi Mingguan" (catatan bebas per tanggal) akan dibuat otomatis, dua-duanya di spreadsheet yang sama.</div>
+    <div class="msub" style="margin-bottom:0;">Belum punya Web App? Buat Google Sheet baru → Extensions → Apps Script → hapus isi default → tempel kode di bawah → Deploy → New deployment → Web app (Execute as: Me, Who has access: Anyone) → salin URL-nya ke kolom di atas. Sheet "ToDo" (tugas harian), "Evaluasi Mingguan" (catatan bebas per tanggal), "Karyawan Baru" (profil anak baru), dan "Log Karyawan" (log tugas/progress anak baru) akan dibuat otomatis, semuanya di spreadsheet yang sama.</div>
     <pre class="code-box" id="codeGsBox"></pre>
     <button type="button" class="btn btn-ghost" id="btnCopyCode" style="width:100%;justify-content:center;margin-top:9px;">📋 Salin Kode Code.gs</button>
 
@@ -766,6 +908,12 @@ var HEADERS = ['ID','TanggalDibuat','Kategori','Prioritas','Tugas','Deadline','S
 var EVAL_SHEET_NAME = 'Evaluasi Mingguan';
 var EVAL_HEADERS = ['ID','Tanggal','Catatan'];
 
+var EMP_SHEET_NAME = 'Karyawan Baru';
+var EMP_HEADERS = ['ID','Nama','Posisi','Divisi','TanggalMulai','Status','Catatan'];
+
+var LOG_SHEET_NAME = 'Log Karyawan';
+var LOG_HEADERS = ['ID','KaryawanID','Tanggal','Tugas','Alasan','Progress','Catatan'];
+
 function getSheet_(){
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var sh = ss.getSheetByName(SHEET_NAME);
@@ -788,10 +936,39 @@ function getEvalSheet_(){
   return sh;
 }
 
+function getEmpSheet_(){
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sh = ss.getSheetByName(EMP_SHEET_NAME);
+  if (!sh){
+    sh = ss.insertSheet(EMP_SHEET_NAME);
+    sh.appendRow(EMP_HEADERS);
+    sh.setFrozenRows(1);
+  }
+  return sh;
+}
+
+function getLogSheet_(){
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sh = ss.getSheetByName(LOG_SHEET_NAME);
+  if (!sh){
+    sh = ss.insertSheet(LOG_SHEET_NAME);
+    sh.appendRow(LOG_HEADERS);
+    sh.setFrozenRows(1);
+  }
+  return sh;
+}
+
 function doGet(e){
   var sh = getSheet_();
   var shEval = getEvalSheet_();
-  return jsonOutput({ tasks: sheetToObjects_(sh), evals: sheetToObjects_(shEval) });
+  var shEmp = getEmpSheet_();
+  var shLog = getLogSheet_();
+  return jsonOutput({
+    tasks: sheetToObjects_(sh),
+    evals: sheetToObjects_(shEval),
+    employees: sheetToObjects_(shEmp),
+    logs: sheetToObjects_(shLog)
+  });
 }
 
 function doPost(e){
@@ -807,6 +984,14 @@ function doPost(e){
       var shEval = getEvalSheet_();
       if (data.type === 'upsert') upsertEval_(shEval, data);
       else if (data.type === 'delete') deleteEval_(shEval, data);
+    } else if (data.sheet === 'karyawan'){
+      var shEmp = getEmpSheet_();
+      if (data.type === 'upsert') upsertEmp_(shEmp, data);
+      else if (data.type === 'delete') deleteEmp_(shEmp, data);
+    } else if (data.sheet === 'logkaryawan'){
+      var shLog = getLogSheet_();
+      if (data.type === 'upsert') upsertLog_(shLog, data);
+      else if (data.type === 'delete') deleteLog_(shLog, data);
     } else {
       var sh = getSheet_();
       if (data.type === 'upsert') upsertTask_(sh, data);
@@ -829,7 +1014,7 @@ function formatCellDate_(v){
   return String(v || '').trim();
 }
 
-var DATE_FIELDS_ = { deadline:1, tanggaldibuat:1, tanggal:1, tenggat:1 };
+var DATE_FIELDS_ = { deadline:1, tanggaldibuat:1, tanggal:1, tenggat:1, tanggalmulai:1 };
 
 function sheetToObjects_(sheet){
   var rows = sheet.getDataRange().getValues();
@@ -898,6 +1083,56 @@ function deleteEval_(sh, data){
       return;
     }
   }
+}
+
+// Upsert profil karyawan baru berdasarkan ID
+function upsertEmp_(sh, data){
+  var rows = sh.getDataRange().getValues();
+  var id = String(data.id).trim();
+  var rowValues = [data.id, data.nama, data.posisi, data.divisi, data.tanggalmulai, data.status, data.catatan];
+  for (var i = 1; i < rows.length; i++){
+    if (String(rows[i][0]).trim() === id){
+      sh.getRange(i + 1, 1, 1, EMP_HEADERS.length).setValues([rowValues]);
+      return;
+    }
+  }
+  sh.appendRow(rowValues);
+}
+
+function deleteEmp_(sh, data){
+  var rows = sh.getDataRange().getValues();
+  var id = String(data.id).trim();
+  for (var i = 1; i < rows.length; i++){
+    if (String(rows[i][0]).trim() === id){
+      sh.deleteRow(i + 1);
+      return;
+    }
+  }
+}
+
+// Upsert log tugas/progress karyawan berdasarkan ID
+function upsertLog_(sh, data){
+  var rows = sh.getDataRange().getValues();
+  var id = String(data.id).trim();
+  var rowValues = [data.id, data.karyawanid, data.tanggal, data.tugas, data.alasan, data.progress, data.catatan];
+  for (var i = 1; i < rows.length; i++){
+    if (String(rows[i][0]).trim() === id){
+      sh.getRange(i + 1, 1, 1, LOG_HEADERS.length).setValues([rowValues]);
+      return;
+    }
+  }
+  sh.appendRow(rowValues);
+}
+
+function deleteLog_(sh, data){
+  var rows = sh.getDataRange().getValues();
+  var id = String(data.id).trim();
+  for (var i = 1; i < rows.length; i++){
+    if (String(rows[i][0]).trim() === id){
+      sh.deleteRow(i + 1);
+      return;
+    }
+  }
 }`;
 
 /* ============ CONFIG ============ */
@@ -909,12 +1144,21 @@ const PRIO_COLOR   = { Tinggi:'#E0546B', Sedang:'#F2B134', Rendah:'#3E92CC' };
 const BULAN = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
 const HARI  = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
 const DIVISI_LIST = ['Advertiser','Marketplace','TikTok Specialist','Affiliate Specialist','Lainnya'];
+const EMP_STATUS_LIST = ['Onboarding','Probation','Aktif'];
+const EMP_STATUS_COLOR = { Onboarding:'#3E92CC', Probation:'#F2B134', Aktif:'#2BAE66' };
+const LOG_PROGRESS_LIST = ['Belum','Proses','Selesai'];
 
 /* ============ STATE ============ */
 let TASKS = [];
 let EVALS = [];
+let EMPLOYEES = [];
+let EMPLOGS = [];
 let editingEvalId = null;
-let deletingKind = 'task'; // 'task' | 'eval' — dipakai modal konfirmasi hapus
+let editingEmpId = null;
+let editingLogId = null;
+let openLogEmpId = null;   // id karyawan yang drawer form log-nya lagi kebuka
+let expandedEmpIds = new Set(); // kartu karyawan yang log-nya lagi dibuka
+let deletingKind = 'task'; // 'task' | 'eval' | 'employee' | 'log' — dipakai modal konfirmasi hapus
 let today = new Date();
 let viewYear = today.getFullYear();
 let viewMonth = today.getMonth();
@@ -940,6 +1184,8 @@ function parseISO(s){
 function todayISO(){ return fmtISO(new Date()); }
 function genId(){ return 't_' + Date.now() + '_' + Math.random().toString(36).slice(2,7); }
 function genEvalId(){ return 'e_' + Date.now() + '_' + Math.random().toString(36).slice(2,7); }
+function genEmpId(){ return 'm_' + Date.now() + '_' + Math.random().toString(36).slice(2,7); }
+function genLogId(){ return 'l_' + Date.now() + '_' + Math.random().toString(36).slice(2,7); }
 function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
 function toast(msg){
@@ -972,6 +1218,24 @@ function loadEvalLocalCache(){
     const raw = localStorage.getItem('todoEvals');
     if (raw) EVALS = JSON.parse(raw);
   }catch(e){ EVALS = []; }
+}
+function saveEmpLocalCache(){
+  try{ localStorage.setItem('todoEmployees', JSON.stringify(EMPLOYEES)); }catch(e){}
+}
+function loadEmpLocalCache(){
+  try{
+    const raw = localStorage.getItem('todoEmployees');
+    if (raw) EMPLOYEES = JSON.parse(raw);
+  }catch(e){ EMPLOYEES = []; }
+}
+function saveLogLocalCache(){
+  try{ localStorage.setItem('todoEmpLogs', JSON.stringify(EMPLOGS)); }catch(e){}
+}
+function loadLogLocalCache(){
+  try{
+    const raw = localStorage.getItem('todoEmpLogs');
+    if (raw) EMPLOGS = JSON.parse(raw);
+  }catch(e){ EMPLOGS = []; }
 }
 function getAppsScriptUrl(){ return document.getElementById('gasUrl').value.trim(); }
 function saveAppsScriptUrl(){
@@ -1357,26 +1621,340 @@ function confirmDeleteEval(id){
   document.getElementById('deleteOverlay').classList.add('open');
 }
 
+/* ============ ANAK BARU (ONBOARDING KARYAWAN) ============ */
+function populateDivisiSelect(selected){
+  document.getElementById('mDivisi').innerHTML = DIVISI_LIST.map(k=>
+    `<option value="${esc(k)}" ${k===selected?'selected':''}>${esc(k)}</option>`
+  ).join('');
+}
+function daysSince(dateStr){
+  if (!dateStr) return null;
+  const d = parseISO(dateStr);
+  if (isNaN(d.getTime())) return null;
+  const diff = Math.floor((new Date(fmtISO(new Date())) - d) / 86400000);
+  return diff;
+}
+function empLogsFor(empId){
+  return EMPLOGS.filter(l=> l.karyawanId === empId).sort((a,b)=> (b.tanggal||'').localeCompare(a.tanggal||'') || (b.id||'').localeCompare(a.id||''));
+}
+function empProgressStats(empId){
+  const logs = empLogsFor(empId);
+  const total = logs.length;
+  const done = logs.filter(l=> l.progress === 'Selesai').length;
+  const pct = total ? Math.round((done/total)*100) : 0;
+  return { total, done, pct };
+}
+function renderKaryawanView(){
+  const wrap = document.getElementById('empList');
+  const emptyEl = document.getElementById('empEmpty');
+  if (!EMPLOYEES.length){
+    wrap.innerHTML = '';
+    emptyEl.style.display = 'block';
+    return;
+  }
+  emptyEl.style.display = 'none';
+
+  const list = EMPLOYEES.slice().sort((a,b)=> (b.tanggalMulai||'').localeCompare(a.tanggalMulai||''));
+  wrap.innerHTML = list.map(m=>{
+    const stats = empProgressStats(m.id);
+    const hari = daysSince(m.tanggalMulai);
+    const initials = (m.nama||'?').trim().split(/\s+/).slice(0,2).map(w=>w[0]||'').join('').toUpperCase();
+    const logs = empLogsFor(m.id);
+    const isOpen = expandedEmpIds.has(m.id);
+    const logsHTML = logs.length ? logs.map(l=>`
+      <div class="emp-log-item" data-logid="${esc(l.id)}">
+        <div class="emp-log-top">
+          <div>
+            <div class="emp-log-title">${esc(l.tugas)}</div>
+            <div class="emp-log-date">${esc(l.tanggal||'')}</div>
+          </div>
+          <span class="status-badge" style="background:${STATUS_COLOR[l.progress]||'#94A3B8'};flex-shrink:0;">${esc(l.progress||'Belum')}</span>
+        </div>
+        ${l.alasan ? `<div class="emp-log-reason"><b>Alasan/tujuan:</b> ${esc(l.alasan)}</div>` : ''}
+        ${l.catatan ? `<div class="emp-log-note">${esc(l.catatan)}</div>` : ''}
+        <div class="emp-log-actions">
+          <button class="mini-btn" data-editlog="${esc(l.id)}">✏️ Edit</button>
+          <button class="mini-btn danger" data-dellog="${esc(l.id)}">🗑️ Hapus</button>
+        </div>
+      </div>`).join('') : '<div class="emp-empty-log">Belum ada log tugas untuk anak ini.</div>';
+
+    return `
+      <div class="emp-card" data-empid="${esc(m.id)}">
+        <div class="emp-card-top">
+          <div class="emp-name-row">
+            <div class="emp-avatar">${esc(initials||'?')}</div>
+            <div>
+              <div class="emp-name">${esc(m.nama)}</div>
+              <div class="emp-meta">
+                <span>${esc(m.posisi||'—')}</span>
+                <span>${esc(m.divisi||'—')}</span>
+                <span>Mulai ${esc(m.tanggalMulai||'—')}${hari!==null ? ' · hari ke-' + (hari+1) : ''}</span>
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:8px;">
+            <span class="status-badge" style="background:${EMP_STATUS_COLOR[m.status]||'#94A3B8'};">${esc(m.status||'Onboarding')}</span>
+            <div class="emp-actions">
+              <button class="icon-btn" title="Salin ringkasan laporan" data-report="${esc(m.id)}">📋</button>
+              <button class="icon-btn" title="Edit profil" data-editemp="${esc(m.id)}">✏️</button>
+              <button class="icon-btn danger" title="Hapus" data-delemp="${esc(m.id)}">🗑️</button>
+            </div>
+          </div>
+        </div>
+        <div class="emp-progress-wrap">
+          <div class="emp-progress-bar"><div class="emp-progress-fill" style="width:${stats.pct}%;"></div></div>
+          <div class="emp-progress-text">${stats.done}/${stats.total} tugas selesai (${stats.pct}%)</div>
+        </div>
+        ${m.catatan ? `<div class="emp-note">${esc(m.catatan)}</div>` : ''}
+        <div class="emp-log-toggle ${isOpen?'open':''}" data-toggle="${esc(m.id)}">
+          <span>📋 Log Tugas &amp; Progress (${logs.length})</span>
+          <span class="chev">▾</span>
+        </div>
+        <div class="emp-log-list ${isOpen?'open':''}" id="logList_${esc(m.id)}">${logsHTML}</div>
+        <button type="button" class="btn btn-add-log" data-addlog="${esc(m.id)}">➕ Tambah Log Tugas</button>
+      </div>`;
+  }).join('');
+
+  wrap.querySelectorAll('[data-toggle]').forEach(el=> el.onclick = ()=>{
+    const id = el.dataset.toggle;
+    if (expandedEmpIds.has(id)) expandedEmpIds.delete(id); else expandedEmpIds.add(id);
+    renderKaryawanView();
+  });
+  wrap.querySelectorAll('[data-editemp]').forEach(b=> b.onclick = ()=> openEmpDrawer(b.dataset.editemp));
+  wrap.querySelectorAll('[data-delemp]').forEach(b=> b.onclick = ()=> confirmDeleteEmp(b.dataset.delemp));
+  wrap.querySelectorAll('[data-addlog]').forEach(b=> b.onclick = ()=> openLogDrawer(b.dataset.addlog, null));
+  wrap.querySelectorAll('[data-editlog]').forEach(b=> b.onclick = ()=> {
+    const l = EMPLOGS.find(x=>x.id===b.dataset.editlog);
+    if (l) openLogDrawer(l.karyawanId, l.id);
+  });
+  wrap.querySelectorAll('[data-dellog]').forEach(b=> b.onclick = ()=> confirmDeleteLog(b.dataset.dellog));
+  wrap.querySelectorAll('[data-report]').forEach(b=> b.onclick = ()=> copyEmpReport(b.dataset.report));
+}
+
+function copyEmpReport(empId){
+  const m = EMPLOYEES.find(x=>x.id===empId);
+  if (!m) return;
+  const stats = empProgressStats(empId);
+  const hari = daysSince(m.tanggalMulai);
+  const logs = empLogsFor(empId);
+  const lines = [];
+  lines.push('LAPORAN PROGRESS KARYAWAN BARU');
+  lines.push('Nama: ' + m.nama);
+  lines.push('Posisi: ' + (m.posisi||'-'));
+  lines.push('Divisi: ' + (m.divisi||'-'));
+  lines.push('Mulai kerja: ' + (m.tanggalMulai||'-') + (hari!==null ? ' (hari ke-' + (hari+1) + ')' : ''));
+  lines.push('Status: ' + (m.status||'-'));
+  lines.push('Progress tugas: ' + stats.done + '/' + stats.total + ' selesai (' + stats.pct + '%)');
+  if (m.catatan) lines.push('Catatan umum: ' + m.catatan);
+  lines.push('');
+  lines.push('Log Tugas:');
+  if (!logs.length) lines.push('- (belum ada log tugas)');
+  logs.slice().sort((a,b)=> (a.tanggal||'').localeCompare(b.tanggal||'')).forEach(l=>{
+    lines.push('- [' + (l.tanggal||'-') + '] ' + l.tugas + ' — ' + (l.progress||'Belum') + (l.alasan ? ' (alasan: ' + l.alasan + ')' : '') + (l.catatan ? ' | catatan: ' + l.catatan : ''));
+  });
+  const text = lines.join('\n');
+  const doCopy = async ()=>{
+    try{ await navigator.clipboard.writeText(text); toast('✅ Ringkasan laporan disalin, siap dikirim ke HRD'); }
+    catch(e){
+      const ta = document.createElement('textarea');
+      ta.value = text; document.body.appendChild(ta); ta.select();
+      try{ document.execCommand('copy'); toast('✅ Ringkasan laporan disalin, siap dikirim ke HRD'); }
+      catch(e2){ toast('❌ Gagal menyalin, coba lagi'); }
+      document.body.removeChild(ta);
+    }
+  };
+  doCopy();
+}
+
+function resetEmpFormFields(){
+  editingEmpId = null;
+  document.getElementById('empDrawerTitle').textContent = '➕ Tambah Karyawan Baru';
+  document.getElementById('btnSaveEmpForm').textContent = 'Tambah Karyawan';
+  document.getElementById('mId').value = '';
+  document.getElementById('mNama').value = '';
+  document.getElementById('mPosisi').value = '';
+  populateDivisiSelect(DIVISI_LIST[0]);
+  document.getElementById('mTanggalMulai').value = todayISO();
+  renderChoiceGroup('empStatusChoice', EMP_STATUS_LIST, EMP_STATUS_COLOR, 'Onboarding');
+  document.getElementById('mCatatan').value = '';
+  document.getElementById('empFormMsg').textContent = '';
+}
+function fillEmpFormForEdit(id){
+  const m = EMPLOYEES.find(x=>x.id===id);
+  if (!m) return;
+  editingEmpId = id;
+  document.getElementById('empDrawerTitle').textContent = '✏️ Edit Karyawan';
+  document.getElementById('btnSaveEmpForm').textContent = 'Simpan Perubahan';
+  document.getElementById('mId').value = m.id;
+  document.getElementById('mNama').value = m.nama || '';
+  document.getElementById('mPosisi').value = m.posisi || '';
+  populateDivisiSelect(m.divisi);
+  document.getElementById('mTanggalMulai').value = m.tanggalMulai || '';
+  renderChoiceGroup('empStatusChoice', EMP_STATUS_LIST, EMP_STATUS_COLOR, m.status || 'Onboarding');
+  document.getElementById('mCatatan').value = m.catatan || '';
+  document.getElementById('empFormMsg').textContent = '';
+}
+function openEmpDrawer(id){
+  document.getElementById('empOverlay').classList.add('open');
+  if (id) fillEmpFormForEdit(id);
+  else resetEmpFormFields();
+}
+function closeEmpDrawer(){
+  document.getElementById('empOverlay').classList.remove('open');
+  editingEmpId = null;
+}
+document.getElementById('empForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  const nama = document.getElementById('mNama').value.trim();
+  const msgEl = document.getElementById('empFormMsg');
+  if (!nama){ msgEl.textContent = 'Kolom "Nama Karyawan" wajib diisi'; msgEl.style.color = '#E0546B'; return; }
+
+  const posisi = document.getElementById('mPosisi').value.trim();
+  const divisi = document.getElementById('mDivisi').value;
+  const tanggalMulai = document.getElementById('mTanggalMulai').value || todayISO();
+  const status = document.getElementById('empStatusChoice').dataset.selected || 'Onboarding';
+  const catatan = document.getElementById('mCatatan').value.trim();
+  lastLocalEditAt = Date.now();
+
+  let m;
+  if (editingEmpId){
+    m = EMPLOYEES.find(x=>x.id===editingEmpId);
+    m.nama = nama; m.posisi = posisi; m.divisi = divisi; m.tanggalMulai = tanggalMulai; m.status = status; m.catatan = catatan;
+    toast('Data karyawan diperbarui');
+  } else {
+    m = { id: genEmpId(), nama, posisi, divisi, tanggalMulai, status, catatan };
+    EMPLOYEES.push(m);
+    toast('Karyawan baru ditambahkan');
+  }
+  saveEmpLocalCache();
+  renderKaryawanView();
+  closeEmpDrawer();
+  pushToSheet({ type:'upsert', sheet:'karyawan', id:m.id, nama:m.nama, posisi:m.posisi, divisi:m.divisi, tanggalmulai:m.tanggalMulai, status:m.status, catatan:m.catatan });
+});
+document.getElementById('btnCancelEmpForm').onclick = closeEmpDrawer;
+document.getElementById('empDrawerClose').onclick = closeEmpDrawer;
+document.getElementById('empOverlay').addEventListener('click', (e)=>{
+  if (e.target.id === 'empOverlay') closeEmpDrawer();
+});
+function confirmDeleteEmp(id){
+  const m = EMPLOYEES.find(x=>x.id===id);
+  if (!m) return;
+  deletingId = id;
+  deletingKind = 'employee';
+  document.getElementById('deleteMsub').textContent = 'Profil "' + m.nama + '" beserta seluruh log tugasnya akan dihapus permanen dari daftar dan spreadsheet.';
+  document.getElementById('deleteOverlay').classList.add('open');
+}
+
+/* ---- Log tugas per karyawan ---- */
+function resetLogFormFields(empId){
+  editingLogId = null;
+  const m = EMPLOYEES.find(x=>x.id===empId);
+  document.getElementById('logDrawerTitle').textContent = '➕ Tambah Log Tugas';
+  document.getElementById('logDrawerSub').textContent = 'Untuk — ' + (m ? m.nama : '');
+  document.getElementById('btnSaveLogForm').textContent = 'Tambah Log';
+  document.getElementById('lId').value = '';
+  document.getElementById('lEmpId').value = empId;
+  document.getElementById('lTanggal').value = todayISO();
+  document.getElementById('lTugas').value = '';
+  document.getElementById('lAlasan').value = '';
+  renderChoiceGroup('logProgressChoice', LOG_PROGRESS_LIST, STATUS_COLOR, 'Belum');
+  document.getElementById('lCatatan').value = '';
+  document.getElementById('logFormMsg').textContent = '';
+}
+function fillLogFormForEdit(id){
+  const l = EMPLOGS.find(x=>x.id===id);
+  if (!l) return;
+  editingLogId = id;
+  const m = EMPLOYEES.find(x=>x.id===l.karyawanId);
+  document.getElementById('logDrawerTitle').textContent = '✏️ Edit Log Tugas';
+  document.getElementById('logDrawerSub').textContent = 'Untuk — ' + (m ? m.nama : '');
+  document.getElementById('btnSaveLogForm').textContent = 'Simpan Perubahan';
+  document.getElementById('lId').value = l.id;
+  document.getElementById('lEmpId').value = l.karyawanId;
+  document.getElementById('lTanggal').value = l.tanggal || todayISO();
+  document.getElementById('lTugas').value = l.tugas || '';
+  document.getElementById('lAlasan').value = l.alasan || '';
+  renderChoiceGroup('logProgressChoice', LOG_PROGRESS_LIST, STATUS_COLOR, l.progress || 'Belum');
+  document.getElementById('lCatatan').value = l.catatan || '';
+  document.getElementById('logFormMsg').textContent = '';
+}
+function openLogDrawer(empId, logId){
+  document.getElementById('logOverlay').classList.add('open');
+  if (logId) fillLogFormForEdit(logId);
+  else resetLogFormFields(empId);
+}
+function closeLogDrawer(){
+  document.getElementById('logOverlay').classList.remove('open');
+  editingLogId = null;
+}
+document.getElementById('logForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  const tugas = document.getElementById('lTugas').value.trim();
+  const msgEl = document.getElementById('logFormMsg');
+  if (!tugas){ msgEl.textContent = 'Kolom "Tugas / Kerjaan" wajib diisi'; msgEl.style.color = '#E0546B'; return; }
+
+  const karyawanId = document.getElementById('lEmpId').value;
+  const tanggal = document.getElementById('lTanggal').value || todayISO();
+  const alasan = document.getElementById('lAlasan').value.trim();
+  const progress = document.getElementById('logProgressChoice').dataset.selected || 'Belum';
+  const catatan = document.getElementById('lCatatan').value.trim();
+  lastLocalEditAt = Date.now();
+
+  let l;
+  if (editingLogId){
+    l = EMPLOGS.find(x=>x.id===editingLogId);
+    l.karyawanId = karyawanId; l.tanggal = tanggal; l.tugas = tugas; l.alasan = alasan; l.progress = progress; l.catatan = catatan;
+    toast('Log tugas diperbarui');
+  } else {
+    l = { id: genLogId(), karyawanId, tanggal, tugas, alasan, progress, catatan };
+    EMPLOGS.push(l);
+    toast('Log tugas ditambahkan');
+  }
+  expandedEmpIds.add(karyawanId);
+  saveLogLocalCache();
+  renderKaryawanView();
+  closeLogDrawer();
+  pushToSheet({ type:'upsert', sheet:'logkaryawan', id:l.id, karyawanid:l.karyawanId, tanggal:l.tanggal, tugas:l.tugas, alasan:l.alasan, progress:l.progress, catatan:l.catatan });
+});
+document.getElementById('btnCancelLogForm').onclick = closeLogDrawer;
+document.getElementById('logDrawerClose').onclick = closeLogDrawer;
+document.getElementById('logOverlay').addEventListener('click', (e)=>{
+  if (e.target.id === 'logOverlay') closeLogDrawer();
+});
+function confirmDeleteLog(id){
+  const l = EMPLOGS.find(x=>x.id===id);
+  if (!l) return;
+  deletingId = id;
+  deletingKind = 'log';
+  document.getElementById('deleteMsub').textContent = 'Log tugas "' + l.tugas + '" akan dihapus permanen dari daftar dan spreadsheet.';
+  document.getElementById('deleteOverlay').classList.add('open');
+}
+
 function setViewMode(mode){
   viewMode = mode;
   document.getElementById('calCard').style.display = mode === 'calendar' ? '' : 'none';
   document.getElementById('agendaCard').style.display = mode === 'list' ? '' : 'none';
   document.getElementById('checklistCard').style.display = mode === 'checklist' ? '' : 'none';
   document.getElementById('evalCard').style.display = mode === 'evaluasi' ? '' : 'none';
+  document.getElementById('empCard').style.display = mode === 'karyawan' ? '' : 'none';
+  document.getElementById('nodateCard').style.display = mode === 'karyawan' ? 'none' : '';
   document.getElementById('btnViewCalendar').classList.toggle('active', mode === 'calendar');
   document.getElementById('btnViewList').classList.toggle('active', mode === 'list');
   document.getElementById('btnViewChecklist').classList.toggle('active', mode === 'checklist');
   document.getElementById('btnViewEval').classList.toggle('active', mode === 'evaluasi');
+  document.getElementById('btnViewKaryawan').classList.toggle('active', mode === 'karyawan');
   const addBtn = document.getElementById('btnAddToday');
-  if (addBtn) addBtn.textContent = mode === 'evaluasi' ? '＋ Tambah Catatan' : '＋ Tambah Tugas';
+  if (addBtn) addBtn.textContent = mode === 'evaluasi' ? '＋ Tambah Catatan' : (mode === 'karyawan' ? '＋ Tambah Karyawan' : '＋ Tambah Tugas');
   if (mode === 'list') renderAgenda();
   if (mode === 'checklist') renderChecklist();
   if (mode === 'evaluasi') renderEvalView();
+  if (mode === 'karyawan') renderKaryawanView();
 }
 document.getElementById('btnViewCalendar').onclick = ()=> setViewMode('calendar');
 document.getElementById('btnViewList').onclick = ()=> setViewMode('list');
 document.getElementById('btnViewChecklist').onclick = ()=> setViewMode('checklist');
 document.getElementById('btnViewEval').onclick = ()=> setViewMode('evaluasi');
+document.getElementById('btnViewKaryawan').onclick = ()=> setViewMode('karyawan');
 document.getElementById('nodateCard').onclick = ()=> openDrawer('');
 
 /* ============ CHECKLIST HARIAN (jobdesk leader marketing) ============ */
@@ -1879,6 +2457,22 @@ document.getElementById('btnConfirmDelete').onclick = ()=>{
     renderEvalView();
     pushToSheet({ type:'delete', sheet:'eval', id:deletingId });
     toast('Catatan dihapus');
+  } else if (deletingKind === 'employee'){
+    const removedLogIds = EMPLOGS.filter(l=>l.karyawanId===deletingId).map(l=>l.id);
+    EMPLOYEES = EMPLOYEES.filter(x=>x.id!==deletingId);
+    EMPLOGS = EMPLOGS.filter(l=>l.karyawanId!==deletingId);
+    saveEmpLocalCache();
+    saveLogLocalCache();
+    renderKaryawanView();
+    pushToSheet({ type:'delete', sheet:'karyawan', id:deletingId });
+    removedLogIds.forEach(lid=> pushToSheet({ type:'delete', sheet:'logkaryawan', id:lid }));
+    toast('Karyawan dihapus');
+  } else if (deletingKind === 'log'){
+    EMPLOGS = EMPLOGS.filter(x=>x.id!==deletingId);
+    saveLogLocalCache();
+    renderKaryawanView();
+    pushToSheet({ type:'delete', sheet:'logkaryawan', id:deletingId });
+    toast('Log tugas dihapus');
   } else {
     TASKS = TASKS.filter(t=>t.id!==deletingId);
     saveLocalCache();
@@ -1900,6 +2494,7 @@ function refreshAll(){
   renderNodateCard();
   if (viewMode === 'list') renderAgenda();
   if (viewMode === 'evaluasi') renderEvalView();
+  if (viewMode === 'karyawan') renderKaryawanView();
 }
 
 /* ============ NAV + FILTERS + SEARCH ============ */
@@ -1919,6 +2514,7 @@ document.getElementById('searchInput').addEventListener('input', (e)=>{
 });
 document.getElementById('btnAddToday').onclick = ()=>{
   if (viewMode === 'evaluasi') openEvalDrawer(null);
+  else if (viewMode === 'karyawan') openEmpDrawer(null);
   else openDrawer(todayISO());
 };
 document.getElementById('drawerClose').onclick = closeDrawer;
@@ -1928,7 +2524,7 @@ document.getElementById('dayOverlay').addEventListener('click', (e)=>{
 
 /* ============ SETTINGS MODAL ============ */
 document.getElementById('btnSettings').onclick = ()=>{
-  document.getElementById('localDataInfo').textContent = TASKS.length + ' tugas & ' + EVALS.length + ' catatan tersimpan di perangkat ini.';
+  document.getElementById('localDataInfo').textContent = TASKS.length + ' tugas, ' + EVALS.length + ' catatan, ' + EMPLOYEES.length + ' karyawan baru & ' + EMPLOGS.length + ' log tugas tersimpan di perangkat ini.';
   renderKategoriManageList();
   document.getElementById('settingsOverlay').classList.add('open');
 };
@@ -1962,12 +2558,18 @@ document.getElementById('btnClearLocal').onclick = ()=>{
   if (!confirm('Yakin hapus semua data lokal di perangkat ini? (data di Google Sheets tidak ikut terhapus)')) return;
   TASKS = [];
   EVALS = [];
+  EMPLOYEES = [];
+  EMPLOGS = [];
   try{ localStorage.removeItem('todoTasks'); }catch(e){}
   try{ localStorage.removeItem('todoEvals'); }catch(e){}
+  try{ localStorage.removeItem('todoEmployees'); }catch(e){}
+  try{ localStorage.removeItem('todoEmpLogs'); }catch(e){}
   saveLocalCache();
   saveEvalLocalCache();
+  saveEmpLocalCache();
+  saveLogLocalCache();
   refreshAll();
-  document.getElementById('localDataInfo').textContent = '0 tugas & 0 catatan tersimpan di perangkat ini.';
+  document.getElementById('localDataInfo').textContent = '0 tugas, 0 catatan, 0 karyawan baru & 0 log tugas tersimpan di perangkat ini.';
   toast('Data lokal dihapus');
 };
 
@@ -2055,6 +2657,28 @@ async function pullFromSheet(silent){
       what: String(r.what || r.catatan || '').trim()
     })).filter(r=> r.id && r.what);
     saveEvalLocalCache();
+
+    EMPLOYEES = (json.employees || []).map(r=>({
+      id: String(r.id || '').trim(),
+      nama: String(r.nama || '').trim(),
+      posisi: String(r.posisi || '').trim(),
+      divisi: String(r.divisi || '').trim() || DIVISI_LIST[0],
+      tanggalMulai: String(r.tanggalmulai || '').trim(),
+      status: String(r.status || '').trim() || 'Onboarding',
+      catatan: String(r.catatan || '').trim()
+    })).filter(r=> r.id && r.nama);
+    saveEmpLocalCache();
+
+    EMPLOGS = (json.logs || []).map(r=>({
+      id: String(r.id || '').trim(),
+      karyawanId: String(r.karyawanid || '').trim(),
+      tanggal: String(r.tanggal || '').trim(),
+      tugas: String(r.tugas || '').trim(),
+      alasan: String(r.alasan || '').trim(),
+      progress: String(r.progress || '').trim() || 'Belum',
+      catatan: String(r.catatan || '').trim()
+    })).filter(r=> r.id && r.tugas && r.karyawanId);
+    saveLogLocalCache();
     const now = new Date();
     note.textContent = '🔄 Tersinkron ' + String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0') + ':' + String(now.getSeconds()).padStart(2,'0');
     return 'ok';
@@ -2281,6 +2905,8 @@ function startLiveClock(){
 (function init(){
   loadLocalCache();
   loadEvalLocalCache();
+  loadEmpLocalCache();
+  loadLogLocalCache();
   loadKategoriList();
   activeKategori = new Set(KATEGORI_LIST);
   renderKategoriFilters();

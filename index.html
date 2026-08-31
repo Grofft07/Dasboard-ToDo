@@ -367,6 +367,7 @@ main{flex:1;min-width:0;padding:30px 34px 60px;}
 }
 .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent);background:var(--white);}
 .field textarea{resize:vertical;min-height:64px;}
+#eWhat{min-height:220px;line-height:1.6;}
 .choice-group{display:flex;gap:7px;flex-wrap:wrap;}
 .choice-opt{
   flex:1;min-width:80px;text-align:center;padding:9px 6px;border-radius:9px;border:1.5px solid var(--line);
@@ -1268,6 +1269,56 @@ function closeEvalDrawer(){
   document.getElementById('evalOverlay').classList.remove('open');
   editingEvalId = null;
 }
+// Auto-lanjut bullet/nomor mirip Word saat menekan Enter di kolom Catatan
+function setupAutoBulletList(textareaId){
+  const ta = document.getElementById(textareaId);
+  if (!ta) return;
+  ta.addEventListener('keydown', function(e){
+    if (e.key !== 'Enter' || e.shiftKey) return;
+    const val = ta.value;
+    const pos = ta.selectionStart;
+    const lineStart = val.lastIndexOf('\n', pos - 1) + 1;
+    const currentLine = val.slice(lineStart, pos);
+
+    const bulletMatch = currentLine.match(/^(\s*)([-*•])(\s+)/);
+    const numberMatch = currentLine.match(/^(\s*)(\d+)([.)])(\s+)/);
+
+    if (bulletMatch){
+      const [full, indent, marker] = bulletMatch;
+      if (currentLine.trim() === marker){
+        // Baris bullet kosong -> Enter menghentikan list (hapus marker)
+        e.preventDefault();
+        ta.value = val.slice(0, lineStart) + val.slice(pos);
+        ta.selectionStart = ta.selectionEnd = lineStart;
+        return;
+      }
+      e.preventDefault();
+      const insert = '\n' + indent + marker + ' ';
+      ta.value = val.slice(0, pos) + insert + val.slice(pos);
+      const newPos = pos + insert.length;
+      ta.selectionStart = ta.selectionEnd = newPos;
+      return;
+    }
+
+    if (numberMatch){
+      const [full, indent, numStr, sep] = numberMatch;
+      if (currentLine.trim() === numStr + sep){
+        e.preventDefault();
+        ta.value = val.slice(0, lineStart) + val.slice(pos);
+        ta.selectionStart = ta.selectionEnd = lineStart;
+        return;
+      }
+      e.preventDefault();
+      const nextNum = parseInt(numStr, 10) + 1;
+      const insert = '\n' + indent + nextNum + sep + ' ';
+      ta.value = val.slice(0, pos) + insert + val.slice(pos);
+      const newPos = pos + insert.length;
+      ta.selectionStart = ta.selectionEnd = newPos;
+    }
+  });
+}
+setupAutoBulletList('eWhat');
+
 document.getElementById('evalForm').addEventListener('submit', function(e){
   e.preventDefault();
   const what = document.getElementById('eWhat').value.trim();

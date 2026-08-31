@@ -571,7 +571,7 @@ main{flex:1;min-width:0;padding:30px 34px 60px;}
 
     <div class="eval-card" id="evalCard" style="display:none;">
       <div id="evalList"></div>
-      <div class="agenda-empty" id="evalEmpty" style="display:none;">Belum ada catatan. Klik "＋ Tambah Catatan" di atas untuk mulai catat mingguan per divisi.</div>
+      <div class="agenda-empty" id="evalEmpty" style="display:none;">Belum ada catatan. Klik "＋ Tambah Catatan" di atas untuk mulai catat mingguan.</div>
     </div>
   </main>
 </div>
@@ -1946,6 +1946,7 @@ async function pullFromSheet(silent){
   lastSyncError = '';
   if (!url){ note.textContent = 'Belum tersambung ke Google Sheet'; return 'no-url'; }
   if (!silent) note.textContent = '🔄 Menarik data...';
+  const requestStartedAt = Date.now();
   try{
     const controller = new AbortController();
     const timer = setTimeout(()=> controller.abort(), 20000);
@@ -1975,6 +1976,14 @@ async function pullFromSheet(silent){
       lastSyncError = json.message || 'Server Apps Script mengembalikan status error.';
       if (!silent) note.textContent = '❌ Gagal tersambung ke Sheet.';
       return 'error';
+    }
+
+    // Kalau user sempat menambah/edit data lokal SELAMA proses tarik data ini
+    // berjalan (mis. Apps Script lambat merespons), jangan timpa data lokal
+    // yang lebih baru dengan data lama dari server.
+    if (lastLocalEditAt > requestStartedAt){
+      if (!silent) note.textContent = 'Sinkron dilewati (ada perubahan baru di perangkat ini)';
+      return 'stale';
     }
 
     TASKS = (json.tasks || []).map(r=>({
